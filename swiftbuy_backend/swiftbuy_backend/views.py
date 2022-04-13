@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Fruit
+from django.http import JsonResponse
 
 # Create your views here.
 def homepage(request):
-    return render(request, 'home.html')
+    # return render(request, 'home.html')
+    return JsonResponse({'data': 'Hello'})
 
