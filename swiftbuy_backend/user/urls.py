@@ -20,9 +20,5 @@ from . import views
 from user import views as user_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('', views.homepage, name='home'),
-    path('home/<int:uid>/buyinfo/', include('buy.urls')),
-    path('', include('user.urls')),
+    path('signup/', views.signup, name='signup'),
 ]
