@@ -20,20 +20,9 @@ from . import views
 from user import views as user_views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
-    # path('', views.homepage, name='home'),
-    
-    path('about/', views.about, name='about'),
-    path('wallet/', views.wallet, name='wallet'),
-    path('addmoney/', views.addmoney, name='addmoney'),
-    path('cart/', views.cart, name='cart'),
-    path('order/', views.order, name='order'),
-    path('notifications/', views.notifications, name='notifications'),
-
-    path('', include('user.urls')),
-    path('catalog/', include('catalog.urls')),
-    path('<int:userid>/buyinfo/', include('buy.urls')),
-    path('<int:userid>/sellinfo/', include('sell.urls')),
-
+    path('', views.sellinfo),
+    path('addproduct/', admin.site.urls),
+    path('update/<int:productid>', views.update, name='addreview'),
+    path('history/', views.history, name='history'),
+    path('analytics/', views.analytics, name='analytics'),
 ]

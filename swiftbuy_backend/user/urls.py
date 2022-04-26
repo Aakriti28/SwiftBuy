@@ -20,5 +20,7 @@ from . import views
 from user import views as user_views
 
 urlpatterns = [
+    # path('', views.homepage, name='home'),
     path('signup/', views.signup, name='signup'),
+   
 ]
