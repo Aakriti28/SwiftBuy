@@ -26,7 +26,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { AuthService } from './auth.service';
 
 @NgModule({
@@ -59,7 +59,11 @@ import { AuthService } from './auth.service';
     MatInputModule,
     MatRadioModule,
     MatTooltipModule,
-    HttpClientModule
+    HttpClientModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'csrftoken',
+      headerName:'X-CSRFTOKEN'
+    })
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
