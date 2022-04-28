@@ -19,7 +19,8 @@ const routes: Routes = [
   {path:'home/:userid/update/:product_id', component:SellinfoUpdateProductComponent},
   {path:'home/:userid/catalog', component:CatalogComponent},
   {path:'login',component:LoginComponent},
-  {path:'register',component:RegisterComponent}
+  {path:'register',component:RegisterComponent},
+  {path: 'catalog', component: CatalogComponent}
 ];
 
 // redirect '' to sign up page if user is logged in or to home page if not logged in
