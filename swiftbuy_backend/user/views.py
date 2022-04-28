@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .forms import RegisterUserForm
 from .models import Users, Paymentgateway
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
@@ -42,8 +42,14 @@ def login(request):
 	user = authenticate(request, username=user_info['email'], password=user_info['password'])
 	if user is not None:
 		login(request, user)
-		return JsonResponse({'status': 'Login successful.'})
-	return JsonResponse({'status': 'Login unsuccessful.'})
+		return JsonResponse({'status': 'success'})
+	else:
+		if Users.objects.filter(email=user_info['email'], password=user_info['password']).exists():
+			# print("hello", file=sys.stderr)
+			user = Users.objects.get(email=user_info['email'], password=user_info['password'])
+			login(request, user)
+			return JsonResponse({'status': 'success'})
+	return JsonResponse({'status': 'failure'})
 
 @login_required
 def logout(request):
