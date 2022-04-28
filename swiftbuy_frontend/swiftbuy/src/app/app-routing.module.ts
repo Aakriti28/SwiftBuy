@@ -11,7 +11,7 @@ import {SellinfoUpdateProductComponent} from './sellinfo-update-product/sellinfo
 
 const routes: Routes = [
   {path:'home/:userid', component:HomePageComponent},
-  // {path:'homepage/:userid', component:HomePageComponent},
+  // {path:'', redirectTo:'/home/:userid',pathMatch:'full'},
   {path:'home/:userid/catalog/:category_name', component:CatalogProductsComponent},
   {path:'home/:userid/sellinfo/addproduct', component:AddProductComponent},
   {path:'home/:userid/sellinfo', component:SellinfoComponent},
