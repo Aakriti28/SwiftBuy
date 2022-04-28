@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CatalogService } from '../catalog.service';\
 
 @Component({
   selector: 'app-catalog',
@@ -6,10 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./catalog.component.scss']
 })
 export class CatalogComponent implements OnInit {
-
-  constructor() { }
+  catalog_list: any = {};
+  constructor(private service: CatalogService) { }
 
   ngOnInit(): void {
+    this.getCatalogFromAPI()
+  }
+
+  getCatalogFromAPI(){
+    this.service.getCatalog().subscribe(
+      response => {
+        this.catalog_list = response;
+        console.log(this.catalog_list)
+      },
+      error => {
+        console.log("error in getcatalogFromAPI : ",error)
+      }
+    )
   }
 
 }
