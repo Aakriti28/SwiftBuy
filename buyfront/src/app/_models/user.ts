@@ -1,7 +1,7 @@
 export class User {
     email: string;
     password: string;
-    cpassword: string;
+    confirmPassword: string;
     name: string;
     phone: string;
     address: string;
