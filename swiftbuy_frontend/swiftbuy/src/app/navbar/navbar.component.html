@@ -9,19 +9,23 @@
   
       <!-- Links -->
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link waves-light" mdbWavesEffect href="/home/1">Home<span class="sr-only">(current)</span></a>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link waves-light" href="/home/1" [routerLink]="['home/1']" mdbWavesEffect >Home</a> 
+          <!-- <span class="sr-only">(current)</span> -->
         </li>
-        <li class="nav-item">
-          <a class="nav-link waves-light" mdbWavesEffect>My Profile</a>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['profile']">My Profile</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link waves-light" mdbWavesEffect>Pricing</a>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link waves-light" mdbWavesEffect href="/login/" [routerLink]="['login']">Login</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link waves-light" mdbWavesEffect href="/register/" [routerLink]="['register']">Register</a>
         </li>
   
         <!-- Dropdown -->
-        <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+        <li class="nav-item dropdown" dropdown routerLinkActive="active">
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect [routerLink]="['buyer']">
             Buyer<span class="caret"></span>
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
@@ -33,8 +37,8 @@
           </div>
         </li>
 
-        <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+        <li class="nav-item dropdown" dropdown routerLinkActive="active">
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect [routerLink]="['seller']">
             Seller<span class="caret"></span>
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
@@ -59,3 +63,5 @@
   
   </mdb-navbar>
   <!--/.Navbar-->
+
+  <router-outlet></router-outlet> 
