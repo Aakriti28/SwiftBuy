@@ -17,6 +17,13 @@ import { SellHistoryComponent } from './sell-history/sell-history.component';
 import { AddProductComponent } from './add-product/add-product.component';
 import { SellinfoComponent } from './sellinfo/sellinfo.component';
 import { SellinfoUpdateProductComponent } from './sellinfo-update-product/sellinfo-update-product.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -37,7 +44,15 @@ import { SellinfoUpdateProductComponent } from './sellinfo-update-product/sellin
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

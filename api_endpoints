@@ -1,0 +1,15 @@
+GET:
+get_advertised_products()  // ths is will generic across all users right?
+
+get_all_categories() // everything
+
+get_category_names() // only category names
+
+get_seller_product_info() // fetches the product info as in database. prod name, category, brand, price, discount, quantity, iamge_url, prod desc, advertised or not
+
+POST:
+update_product  // update existing product
+
+DELETE:
+delete_product(user_id, product_id): // check if user_id == product seller id
+
