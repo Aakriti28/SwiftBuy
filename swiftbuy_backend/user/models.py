@@ -270,8 +270,8 @@ class UserManager(BaseUserManager):
             wallet_amount = params['wallet_amount'],
         )
 
-        # user.set_password(params['password'])
-        user.set_password(password)
+        user.set_password(params['password'])
+        # user.set_password(password)
         user.save(using=self._db)
         return user
 

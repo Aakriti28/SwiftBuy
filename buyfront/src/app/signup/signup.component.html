@@ -1,0 +1,68 @@
+
+<h2>Signup</h2>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">name is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="text" formControlName="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
+        <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+            <div *ngIf="f.phone.errors.required">Phone Number is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="address">Address</label>
+        <input type="address" formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+        <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+            <div *ngIf="f.address.errors.required">address is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="text" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="cpassword">Confirm Password</label>
+        <input type="text" formControlName="cpassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cpassword.errors }" />
+        <div *ngIf="submitted && f.cpassword.errors" class="invalid-feedback">
+            <div *ngIf="f.cpassword.errors.required">Please Enter Confirm Password</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="shipaddress">Shipping Address</label>
+        <input type="shipaddress" formControlName="shipaddress" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.shipaddress.errors }" />
+        <div *ngIf="submitted && f.shipaddress.errors" class="invalid-feedback">
+            <div *ngIf="f.shipaddress.errors.required">Shipping Address is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="referralToken">Referral Token</label>
+        <input type="referralToken" formControlName="referralToken" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.referralToken.errors }" />
+        <div *ngIf="submitted && f.referralToken.errors" class="invalid-feedback">
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="button" >Signup</button>
+            <!-- <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Register
+        </button> -->
+        <!-- <a routerLink="/login" class="btn btn-link">Cancel</a> -->
+    </div>
+</form>

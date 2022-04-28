@@ -5,33 +5,48 @@ from .models import Users, Paymentgateway
 from django.contrib.auth import login
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 import sys
 import json
+import random
+import string
 
 # Create your views here.
 
 @csrf_exempt
 def signup(request):
-	form = RegisterUserForm(request.POST)
-	user = form.save()
-	user = json.loads(request.body.decode('utf8').replace("'", '"'))
-	if form.is_valid():
-		print(user)
+	user_info = json.loads(request.body.decode('utf8').replace("'", '"'))
+	params = {
+		'name': user_info['name'],
+		'email': user_info['email'],
+		'phone': user_info['phone'],
+		'address': user_info['address'],
+		'shipping_address': user_info['shipaddress'],
+		'referral_token': ''.join(random.choices(string.ascii_lowercase + string.digits, k=32)).replace("'", '"'),
+		'wallet_amount': 0,
+		'role': 'buyer',
+		'password': user_info['password']
+	}
+	form = RegisterUserForm({'name': params['name'], 'email': params['email'], 'phone': params['phone'], 'address': params['address'], 'shipping_address': params['shipping_address'], 'referral_token': params['referral_token'], 'giver_token': user_info['referralToken'], 'password1': params['password'], 'password2': user_info['cpassword']})
+	if form.is_valid() and form.referral_token_is_valid() and params['password'] == user_info['cpassword']:
+		user = form.save()
 		login(request, user)
-		params = {
-			'name': user['name'],
-			'email': user['email'],
-			'phone': user['phone'],
-			'address': user['address'],
-			'shipping_address': user['shippingAddress'],
-			'referral_token': user['referralToken'],
-			'wallet_amount': 0,
-			'role': 'buyer',
-			'password': user['password']
-		}
-		user = Users.objects.create_user(params)
-		# print("User created", file=sys.stderr)
+		# user = Users.objects.create_user(params)
 		return JsonResponse({'user_id': user.uid, 'status': 'Registration successful.'})
-	# print(request.body, file=sys.stderr)
+	print(form.errors)
 	return JsonResponse({'status': 'Unsuccessful registration. Invalid information.'})
+
+def login(request):
+	user_info = json.loads(request.body.decode('utf8').replace("'", '"'))
+	user = authenticate(request, username=user_info['email'], password=user_info['password'])
+	if user is not None:
+		login(request, user)
+		return JsonResponse({'status': 'Login successful.'})
+	return JsonResponse({'status': 'Login unsuccessful.'})
+
+@login_required
+def logout(request):
+	logout(request)
+	return JsonResponse({'status': 'Logout successful.'})
 
