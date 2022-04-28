@@ -5,6 +5,8 @@ from .models import Users, Paymentgateway
 from django.contrib.auth import login
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 import sys
 import json
 import random
@@ -26,14 +28,25 @@ def signup(request):
 		'role': 'buyer',
 		'password': user_info['password']
 	}
-	form = RegisterUserForm(initial={'name': params['name'], 'email': params['email'], 'phone': params['phone'], 'address': params['address'], 'shipping_address': params['shipping_address'], 'referral_token': params['referral_token'], 'giver_token': user_info['referralToken']})
-	if form.is_valid():
+	form = RegisterUserForm({'name': params['name'], 'email': params['email'], 'phone': params['phone'], 'address': params['address'], 'shipping_address': params['shipping_address'], 'referral_token': params['referral_token'], 'giver_token': user_info['referralToken'], 'password1': params['password'], 'password2': user_info['cpassword']})
+	if form.is_valid() and form.referral_token_is_valid() and params['password'] == user_info['cpassword']:
 		user = form.save()
 		login(request, user)
-		user = Users.objects.create_user(params)
-		# print("User created", file=sys.stderr)
+		# user = Users.objects.create_user(params)
 		return JsonResponse({'user_id': user.uid, 'status': 'Registration successful.'})
-	print("User not created", file=sys.stderr)
 	print(form.errors)
 	return JsonResponse({'status': 'Unsuccessful registration. Invalid information.'})
+
+def login(request):
+	user_info = json.loads(request.body.decode('utf8').replace("'", '"'))
+	user = authenticate(request, username=user_info['email'], password=user_info['password'])
+	if user is not None:
+		login(request, user)
+		return JsonResponse({'status': 'Login successful.'})
+	return JsonResponse({'status': 'Login unsuccessful.'})
+
+@login_required
+def logout(request):
+	logout(request)
+	return JsonResponse({'status': 'Logout successful.'})
 

@@ -29,13 +29,12 @@ class RegisterUserForm(UserCreationForm):
 		return user
 
 	def is_valid(self) -> bool:
-		# print(self.cleaned_data, file=sys.stderr)
-		return super().is_valid() # and self.cleaned_data['password'] == self.cleaned_data['cpassword'] and self.referral_token_is_valid()
+		return super().is_valid()
 
 	def referral_token_is_valid(self) -> bool:
-		if self.cleaned_data['referralToken']:
+		if self.cleaned_data['giver_token']:
 			try:
-				user = Users.objects.get(referral_token=self.cleaned_data['referralToken'])
+				user = Users.objects.get(referral_token=self.cleaned_data['giver_token'])
 				return True
 			except Users.DoesNotExist:
 				return False

@@ -3,13 +3,16 @@ from django.http import JsonResponse
 from user.models import Product, Transaction, Wishlist, Notification
 import datetime
 from datetime import timedelta
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+@login_required
 def sellinfo(request, userid):
     products = Product.objects.filter(seller=request.user)
     return JsonResponse({'products': products})
 
+@login_required
 def addproduct(request, userid):
     params = {
         'category': request.POST['category'],
@@ -24,6 +27,7 @@ def addproduct(request, userid):
     product = Product.objects.create(**params)
     return JsonResponse({'product_id': product.id, 'status': 'Product added successfully.'})
 
+@login_required
 def update(request, userid, productid):
     prev_quantity = Product.objects.get(product_id=productid, seller_id=userid).quantity_available
     if request.POST['quantity_available'] > 0 and prev_quantity == 0:
@@ -45,15 +49,18 @@ def update(request, userid, productid):
     Product.objects.filter(product_id=productid).update(**params)
     return JsonResponse({'status': 'Product updated successfully.'})
 
+@login_required
 def delete(request, userid, productid):
     Product.objects.filter(product_id=productid, seller_id=userid).delete()
     return JsonResponse({'status': 'Product deleted successfully.'})
 
+@login_required
 def history(request, userid):
     transactions = Transaction.objects.filter(seller=userid)
     products = Product.objects.filter(id=transactions.product_id)
     return JsonResponse({'transactions': transactions, 'products': products})
 
+@login_required
 def analytics(request, userid):
     orders = Transaction.objects.filter(seller=userid)
     past_week = Transaction.objects.filter(seller=userid, order_id=orders.id, orders__timestamp__gte=datetime.now() - timedelta(days=7))
