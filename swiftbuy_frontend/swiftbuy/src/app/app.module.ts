@@ -60,7 +60,10 @@ import { AuthService } from './auth.service';
     MatRadioModule,
     MatTooltipModule,
     HttpClientModule,
-    HttpClientXsrfModule
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'csrftoken',
+      headerName:'X-CSRFTOKEN'
+    })
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
