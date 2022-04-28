@@ -24,6 +24,10 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     SellHistoryComponent,
     AddProductComponent,
     SellinfoComponent,
-    SellinfoUpdateProductComponent
+    SellinfoUpdateProductComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -52,9 +58,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatIconModule,
     MatInputModule,
     MatRadioModule,
-    MatTooltipModule
+    MatTooltipModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

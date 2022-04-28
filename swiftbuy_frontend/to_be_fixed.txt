@@ -2,4 +2,4 @@ update product info form - prefill radio button and dropdown
 
 change theme to angualr pink grey
 
-
+if user tries to access a page by entering url ensure that he/she can't to it if not authorized to do so
