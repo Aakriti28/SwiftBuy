@@ -7,31 +7,33 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 import sys
 import json
+import random
+import string
 
 # Create your views here.
 
 @csrf_exempt
 def signup(request):
-	form = RegisterUserForm(request.POST)
-	user = form.save()
-	user = json.loads(request.body.decode('utf8').replace("'", '"'))
+	user_info = json.loads(request.body.decode('utf8').replace("'", '"'))
+	params = {
+		'name': user_info['name'],
+		'email': user_info['email'],
+		'phone': user_info['phone'],
+		'address': user_info['address'],
+		'shipping_address': user_info['shipaddress'],
+		'referral_token': ''.join(random.choices(string.ascii_lowercase + string.digits, k=32)).replace("'", '"'),
+		'wallet_amount': 0,
+		'role': 'buyer',
+		'password': user_info['password']
+	}
+	form = RegisterUserForm(initial={'name': params['name'], 'email': params['email'], 'phone': params['phone'], 'address': params['address'], 'shipping_address': params['shipping_address'], 'referral_token': params['referral_token'], 'giver_token': user_info['referralToken']})
 	if form.is_valid():
-		print(user)
+		user = form.save()
 		login(request, user)
-		params = {
-			'name': user['name'],
-			'email': user['email'],
-			'phone': user['phone'],
-			'address': user['address'],
-			'shipping_address': user['shippingAddress'],
-			'referral_token': user['referralToken'],
-			'wallet_amount': 0,
-			'role': 'buyer',
-			'password': user['password']
-		}
 		user = Users.objects.create_user(params)
 		# print("User created", file=sys.stderr)
 		return JsonResponse({'user_id': user.uid, 'status': 'Registration successful.'})
-	# print(request.body, file=sys.stderr)
+	print("User not created", file=sys.stderr)
+	print(form.errors)
 	return JsonResponse({'status': 'Unsuccessful registration. Invalid information.'})
 
