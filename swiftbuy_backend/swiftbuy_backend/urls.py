@@ -22,12 +22,13 @@ from user import views as user_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    # path('', views.homepage, name='home'),
-    
+
+    path('home/', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('wallet/', views.wallet, name='wallet'),
     path('addmoney/', views.addmoney, name='addmoney'),
     path('cart/', views.cart, name='cart'),
+    path('wishlist/', views.wishlist, name='wishlist'),
     path('order/', views.order, name='order'),
     path('notifications/', views.notifications, name='notifications'),
 

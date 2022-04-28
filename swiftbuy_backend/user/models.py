@@ -6,7 +6,10 @@
 #   * Remove `` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.contrib.auth.models import ( BaseUserManager, AbstractBaseUser)
+from django.contrib.auth.models import PermissionsMixin
 
 class Addmoney(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -61,9 +64,9 @@ class Addmoney(models.Model):
 #     is_active = models.BooleanField()
 #     date_joined = models.DateTimeField()
 
-    # class Meta:
+#     class Meta:
         
-    #     db_table = 'auth_user'
+#         db_table = 'auth_user'
 
 
 # class AuthUserGroups(models.Model):
@@ -78,14 +81,14 @@ class Addmoney(models.Model):
 
 
 # class AuthUserUserPermissions(models.Model):
-#     id = models.BigAutoField(primary_key=True)
-#     user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-#     permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
+    # id = models.BigAutoField(primary_key=True)
+    # user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    # permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
 
-#     class Meta:
+    # class Meta:
         
-#         db_table = 'auth_user_user_permissions'
-#         unique_together = (('user', 'permission'),)
+    #     db_table = 'auth_user_user_permissions'
+    #     unique_together = (('user', 'permission'),)
 
 
 class Brand(models.Model):
@@ -178,6 +181,7 @@ class Notification(models.Model):
 
 class Orders(models.Model):
     order_id = models.TextField(primary_key=True)
+    user = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True)
     payment = models.ForeignKey('Paymentgateway', models.DO_NOTHING, blank=True, null=True)
     amount = models.IntegerField(blank=True, null=True)
     trasaction_time = models.DateTimeField(blank=True, null=True)
@@ -247,23 +251,66 @@ class Transaction(models.Model):
         db_table = 'transaction'
         unique_together = (('seller', 'buyer', 'product', 'order'),)
 
+class UserManager(BaseUserManager):
+    def create_user(self, params, password='admin'):
+        """
+        Creates and saves a User with the given email, date of
+        birth and password.
+        """
+        if not params['email']:
+            raise ValueError('Users must have an email address')
 
-class Users(models.Model):
+        user = self.model(
+            email = UserManager.normalize_email(params['email']),
+            name = params['name'],
+            phone = params['phone'],
+            address = params['address'],
+            shipping_address = params['shipping_address'],
+            referral_token = params['referral_token'],
+            wallet_amount = params['wallet_amount'],
+        )
+
+        # user.set_password(params['password'])
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+class Users(AbstractBaseUser):
     uid = models.AutoField(primary_key=True)
     name = models.TextField(blank=True, null=True)
     phone = models.CharField(max_length=10, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
-    email = models.TextField(blank=True, null=True)
+    shipping_address = models.TextField(blank=True, null=True)
+    email = models.TextField(blank=True, null=True, unique=True)
     password = models.TextField(blank=True, null=True)
     wallet_amount = models.IntegerField(blank=True, null=True)
     referral_token = models.TextField(blank=True, null=True)
     role = models.TextField(blank=True, null=True)
 
-    USERNAME_FIELD = 'name'
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
 
     class Meta:
         
         db_table = 'users'
+
+    @property
+    def is_anonymous(self):
+        """
+        Always return False. This is a way of comparing User objects to
+        anonymous users.
+        """
+        return False
+
+    @property
+    def is_authenticated(self):
+        """
+        Always return True. This is a way to tell if the user has been
+        authenticated in templates.
+        """
+        return True
+
 
 
 class Wishlist(models.Model):
@@ -274,3 +321,9 @@ class Wishlist(models.Model):
         
         db_table = 'wishlist'
         unique_together = (('buyer', 'product'),)
+
+
+
+
+
+

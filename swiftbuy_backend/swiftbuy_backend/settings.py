@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'sell',
     'catalog',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +53,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'swiftbuy_backend.urls'
 
@@ -81,7 +85,7 @@ WSGI_APPLICATION = 'swiftbuy_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'swiftbuy',                      
+        'NAME': 'swiftbuy2',                      
         'USER': 'aadishjain',
         'PASSWORD': 'Postgres@123',
         'HOST': 'localhost',
@@ -91,6 +95,8 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = 'user.Users'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -133,3 +139,5 @@ LOGIN_REDIRECT_URL = "/"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_COOKIE_SECURE = False
