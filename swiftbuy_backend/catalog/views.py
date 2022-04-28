@@ -19,5 +19,5 @@ def viewproduct(request, productid):
 
 def search(request):
     query = request.GET.get('query')
-    products = Product.objects.filter(name__icontains=query).filter(product_desc__icontains=query)
+    products = Product.objects.all().raw('SELECT name, price, discount FROM product natural join brand WHERE name LIKE %s OR description LIKE %s OR brand.name LIKE %s LIMIT 5;', ['%'+query+'%', '%'+query+'%', '%'+query+'%'])
     return JsonResponse({'results': products})

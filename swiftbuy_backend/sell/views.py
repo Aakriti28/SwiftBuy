@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from user.models import Product, Transaction
+from user.models import Product, Transaction, Wishlist, Notification
 import datetime
 from datetime import timedelta
 
@@ -10,7 +10,28 @@ def sellinfo(request, userid):
     products = Product.objects.filter(seller=request.user)
     return JsonResponse({'products': products})
 
+def addproduct(request, userid):
+    params = {
+        'category': request.POST['category'],
+        'brand': request.POST['brand'],
+        'name': request.POST['name'],
+        'price': request.POST['price'],
+        'quantity_available': request.POST['quantity_available'],
+        'discount': request.POST['discount'],
+        'product_desc': request.POST['product_desc'],
+        'seller': request.user
+    }
+    product = Product.objects.create(**params)
+    return JsonResponse({'product_id': product.id, 'status': 'Product added successfully.'})
+
 def update(request, userid, productid):
+    prev_quantity = Product.objects.get(product_id=productid, seller_id=userid).quantity_available
+    if request.POST['quantity_available'] > 0 and prev_quantity == 0:
+        wishlist_users = Wishlist.objects.filter(product_id=productid)
+        Wishlist.objects.filter(product_id=productid).delete()
+        for user in wishlist_users:
+            Notification.objects.create(user=user, product_id=productid, message="Your product is now available for purchase.")
+        
     params = {
         'product_id': productid,
         'category': request.POST['category'],
@@ -23,6 +44,10 @@ def update(request, userid, productid):
     }
     Product.objects.filter(product_id=productid).update(**params)
     return JsonResponse({'status': 'Product updated successfully.'})
+
+def delete(request, userid, productid):
+    Product.objects.filter(product_id=productid, seller_id=userid).delete()
+    return JsonResponse({'status': 'Product deleted successfully.'})
 
 def history(request, userid):
     transactions = Transaction.objects.filter(seller=userid)

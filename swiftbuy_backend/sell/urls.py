@@ -21,8 +21,9 @@ from user import views as user_views
 
 urlpatterns = [
     path('', views.sellinfo),
-    path('addproduct/', admin.site.urls),
+    path('addproduct/', views.addproduct),
     path('update/<int:productid>', views.update, name='addreview'),
+    path('delete/<int:productid>', views.delete, name='addreview'),
     path('history/', views.history, name='history'),
     path('analytics/', views.analytics, name='analytics'),
 ]
