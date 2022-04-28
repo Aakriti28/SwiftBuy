@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  private _registerUrl = 'http://localhost:3000/api/register';
-  private _loginUrl = 'http://localhost:3000/api/login';
+  private _registerUrl = 'http://localhost:8000/signup';
+  private _loginUrl = 'http://localhost:8000/login';
   constructor(private http: HttpClient) { }
 
   registerUser(new_user: Registration_info): Observable<any>{
