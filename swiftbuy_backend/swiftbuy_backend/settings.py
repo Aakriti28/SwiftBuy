@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-m3ag1*$nq@n0!kpz5x#&qhu7=6i8*kkun*olob$sx88ottxbx@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.104', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.0.104', 'localhost', '127.0.0.1', '*']
 
 
 # Application definition
@@ -133,7 +133,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGIN_URL = '/login'
+
 LOGIN_REDIRECT_URL = "/"
+
+LOGOUT_REDIRECT_URL = '/logout'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -141,3 +145,10 @@ LOGIN_REDIRECT_URL = "/"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_COOKIE_SECURE = False
+
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_HTTPONLY = False  # this is the default, and should be kept this way
+CSRF_COOKIE_NAME = 'XSRF-TOKEN'
+CSRF_HEADER_NAME = 'HTTP_X_XSRF_TOKEN'
+
+CORS_ORIGIN_ALLOW_ALL = True

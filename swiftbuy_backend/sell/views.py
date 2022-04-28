@@ -8,12 +8,12 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 @login_required
-def sellinfo(request, userid):
+def sellinfo(request):
     products = Product.objects.filter(seller=request.user)
     return JsonResponse({'products': products})
 
 @login_required
-def addproduct(request, userid):
+def addproduct(request):
     params = {
         'category': request.POST['category'],
         'brand': request.POST['brand'],
@@ -28,7 +28,8 @@ def addproduct(request, userid):
     return JsonResponse({'product_id': product.id, 'status': 'Product added successfully.'})
 
 @login_required
-def update(request, userid, productid):
+def update(request, productid):
+    userid = request.user.uid
     prev_quantity = Product.objects.get(product_id=productid, seller_id=userid).quantity_available
     if request.POST['quantity_available'] > 0 and prev_quantity == 0:
         wishlist_users = Wishlist.objects.filter(product_id=productid)
@@ -50,18 +51,21 @@ def update(request, userid, productid):
     return JsonResponse({'status': 'Product updated successfully.'})
 
 @login_required
-def delete(request, userid, productid):
+def delete(request, productid):
+    userid = request.user.uid
     Product.objects.filter(product_id=productid, seller_id=userid).delete()
     return JsonResponse({'status': 'Product deleted successfully.'})
 
 @login_required
-def history(request, userid):
+def history(request):
+    userid = request.user.uid
     transactions = Transaction.objects.filter(seller=userid)
     products = Product.objects.filter(id=transactions.product_id)
     return JsonResponse({'transactions': transactions, 'products': products})
 
 @login_required
-def analytics(request, userid):
+def analytics(request):
+    userid = request.user.uid
     orders = Transaction.objects.filter(seller=userid)
     past_week = Transaction.objects.filter(seller=userid, order_id=orders.id, orders__timestamp__gte=datetime.now() - timedelta(days=7))
     past_month = Transaction.objects.filter(seller=userid, order_id=orders.id, orders__timestamp__gte=datetime.now() - timedelta(days=30))

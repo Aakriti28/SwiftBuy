@@ -34,7 +34,7 @@ urlpatterns = [
 
     path('', include('user.urls')),
     path('catalog/', include('catalog.urls')),
-    path('<int:userid>/buyinfo/', include('buy.urls')),
-    path('<int:userid>/sellinfo/', include('sell.urls')),
+    path('buyinfo/', include('buy.urls')),
+    path('sellinfo/', include('sell.urls')),
 
 ]

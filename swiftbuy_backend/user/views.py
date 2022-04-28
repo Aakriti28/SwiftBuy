@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+
 import sys
 import json
 import random
@@ -37,7 +38,8 @@ def signup(request):
 	print(form.errors)
 	return JsonResponse({'status': 'Unsuccessful registration. Invalid information.'})
 
-def login(request):
+@csrf_exempt
+def mylogin(request):
 	user_info = json.loads(request.body.decode('utf8').replace("'", '"'))
 	user = authenticate(request, username=user_info['email'], password=user_info['password'])
 	if user is not None:
@@ -51,8 +53,8 @@ def login(request):
 			return JsonResponse({'status': 'success'})
 	return JsonResponse({'status': 'failure'})
 
-@login_required
-def logout(request):
+@csrf_exempt
+def mylogout(request):
 	logout(request)
 	return JsonResponse({'status': 'Logout successful.'})
 
