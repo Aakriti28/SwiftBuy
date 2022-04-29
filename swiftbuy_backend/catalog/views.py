@@ -1,30 +1,37 @@
-from itertools import product
+from http import HTTPStatus
 from django.shortcuts import render
 from django.http import JsonResponse
 from user.models import Category, Product
-from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
-@login_required
 def categories(request):
-    print("Hi i am here")
-    categories = Category.objects.all()
-    print("are categries ",categories)
-    return JsonResponse({'results': categories})
+    if request.user.is_authenticated:
+        categories = Category.objects.all()
+        return JsonResponse({'status': 'success', 'results': list(categories.values())}, status=HTTPStatus.OK)
+    else :
+        return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
-@login_required
 def products(request, categoryid):
-    products = Product.objects.filter(category=categoryid)
-    return JsonResponse({'results': products})
-
-@login_required  
+    if request.user.is_authenticated:
+        products = Product.objects.filter(category_id=categoryid)
+        return JsonResponse({'status': 'success', 'results': list(products.values())}, status=HTTPStatus.OK)
+    else :
+        return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
+ 
 def viewproduct(request, productid):
-    product = Product.objects.get(id=productid)
-    return JsonResponse({'results': product})
+    if request.user.is_authenticated:
+        product = Product.objects.get(product_id=productid)
+        return JsonResponse({'status': 'success', 'results': product.__dict__}, status=HTTPStatus.OK)
+    else :
+        return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
-@login_required
 def search(request):
-    query = request.GET.get('query')
-    products = Product.objects.all().raw('SELECT name, price, discount FROM product natural join brand WHERE name LIKE %s OR description LIKE %s OR brand.name LIKE %s LIMIT 5;', ['%'+query+'%', '%'+query+'%', '%'+query+'%'])
-    return JsonResponse({'results': products})
+    if request.user.is_authenticated:
+        query = request.GET['query']
+        # products = Product.objects.filter(name__icontains=query)
+        products = Product.objects.all().raw('SELECT name, price, discount FROM product natural join brand WHERE name LIKE %s OR description LIKE %s OR brand.name LIKE %s LIMIT 5;', ['%'+query+'%', '%'+query+'%', '%'+query+'%'])
+        return JsonResponse({'status': 'success', 'results': list(products.values())}, status=HTTPStatus.OK)
+    else :
+        return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)

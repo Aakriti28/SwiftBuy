@@ -15,6 +15,7 @@ class RegisterUserForm(UserCreationForm):
 	shipping_address = forms.CharField(max_length=100, required=False)
 	referral_token = forms.CharField(max_length=100, required=False)
 	giver_token = forms.CharField(max_length=100, required=False)
+	role = forms.CharField(max_length=100, required=True)
 
 	class Meta:
 		model = Users

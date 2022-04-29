@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { UserService } from '../user.service';
 
-@Component({ templateUrl: 'notification.component.html' })
+@Component({ templateUrl: './notification.component.html' , styleUrls: ['./notification.component.scss'], selector: 'app-notification'})
 export class NotificationComponent implements OnInit {
-    // currentUser: User;
     notifs = [] as any;
 
     constructor(
@@ -14,12 +13,6 @@ export class NotificationComponent implements OnInit {
     ngOnInit() {
         this.loadAllnotifs();
     }
-
-    // deleteUser(id: number) {
-    //     this.userService.delete(id)
-    //         .pipe(first())
-    //         .subscribe(() => this.loadAllUsers());
-    // }
 
     private loadAllnotifs() {
         this.userService.getNotifications()
