@@ -13,13 +13,13 @@ import { CartComponent } from './cart/cart.component';
 
 
 const routes: Routes = [
-  {path:'home/:userid', component:HomePageComponent},
+  {path:'home/', component:HomePageComponent},
   {path:'', redirectTo:'/login',pathMatch:'full'},
-  {path:'home/:userid/catalog/:category_name', component:CatalogProductsComponent},
-  {path:'home/:userid/sellinfo/addproduct', component:AddProductComponent},
-  {path:'home/:userid/sellinfo', component:SellinfoComponent},
-  {path:'home/:userid/update/:product_id', component:SellinfoUpdateProductComponent},
-  {path:'home/:userid/catalog', component:CatalogComponent},
+  {path:'home/catalog/:category_name', component:CatalogProductsComponent},
+  {path:'home/sellinfo/addproduct', component:AddProductComponent},
+  {path:'home/sellinfo', component:SellinfoComponent},
+  {path:'home/update/:product_id', component:SellinfoUpdateProductComponent},
+  {path:'home/catalog', component:CatalogComponent},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
   {path: 'catalog', component: CatalogComponent},
