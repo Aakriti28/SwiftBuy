@@ -18,8 +18,8 @@ def home(request):
 def about(request):
 	if request.user.is_authenticated:
 		if request.method == 'GET':
-			details = Users.objects.get(uid=request.user.uid)
-			return JsonResponse({'status': 'success', 'results': details.__dict__}, status=HTTPStatus.OK)
+			details = Users.objects.filter(uid=request.user.uid).values()[0]
+			return JsonResponse({'status': 'success', 'results': details}, status=HTTPStatus.OK)
 		elif request.method == 'POST':
 			params = {
 				'name': request.POST['name'],
