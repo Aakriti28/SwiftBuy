@@ -9,8 +9,8 @@ import { UserService } from '../user.service';
 
 export class UpdateProfileComponent implements OnInit {
   my_profile: any = {};
-  registerUserData = {
-    name: 'asdads',
+  registerUserData:Registration_info = {
+    name: '',
     email: '',
     role: '',
     address: '',
@@ -32,17 +32,18 @@ export class UpdateProfileComponent implements OnInit {
     this.service.getProfile().subscribe(
       response => {
         this.my_profile = response;
-        console.log(this.my_profile)
+        this.my_profile = this.my_profile.results;
         this.received_data=true;
         this.registerUserData.address = this.my_profile.address;
-    this.registerUserData.password = this.my_profile.password;
-    this.registerUserData.cpassword = this.my_profile.cpassword;
-    this.registerUserData.shipaddress = this.my_profile.shipaddress;
-    this.registerUserData.role = this.my_profile.role;
-    this.registerUserData.referralToken = this.my_profile.referralToken;
-    this.registerUserData.phone = this.my_profile.phone;
-    this.registerUserData.email = this.my_profile.email;
-    this.registerUserData.name = this.my_profile.name;
+        this.registerUserData.password = this.my_profile.password;
+        this.registerUserData.cpassword = this.my_profile.password;
+        this.registerUserData.shipaddress = this.my_profile.shipaddress;
+        this.registerUserData.role = this.my_profile.role;
+        this.registerUserData.referralToken = this.my_profile.referralToken;
+        this.registerUserData.phone = this.my_profile.phone;
+        this.registerUserData.email = this.my_profile.email;
+        this.registerUserData.name = this.my_profile.name;
+        
       },
       error => {
         console.log("error in get_my_profile : ",error)
@@ -50,9 +51,7 @@ export class UpdateProfileComponent implements OnInit {
     )
   }
 
-  updateProfile(){
-    
-
+  updateUserInfo(){
     this.service.updateProfile(this.registerUserData).subscribe(
       response => {
         console.log("registered new user. response = ",response);

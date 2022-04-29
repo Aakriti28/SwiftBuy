@@ -8,9 +8,11 @@ import { Registration_info } from '../registration_details';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  my_profile: any = {};
+  my_profile: any = {
+    name: 'hi'
+  };
   registerUserData:Registration_info = {
-    name: '',
+    name: 'asasasas',
     email: '',
     role: '',
     address: '',
@@ -20,7 +22,7 @@ export class ProfileComponent implements OnInit {
     cpassword: '',
     shipaddress: ''
   };
-  public showUpdateForm = false;
+  public receivedData = false;
   constructor(private service: UserService) { }
 
   ngOnInit(): void {
@@ -31,7 +33,9 @@ export class ProfileComponent implements OnInit {
     this.service.getProfile().subscribe(
       response => {
         this.my_profile = response;
-        console.log(this.my_profile)
+        this.my_profile = this.my_profile.results
+        console.log(this.my_profile);
+        this.receivedData = true;
       },
       error => {
         console.log("error in get_my_profile : ",error)
@@ -39,26 +43,5 @@ export class ProfileComponent implements OnInit {
     )
   }
 
-  updateProfile(){
-    this.registerUserData.address = this.my_profile.address;
-    this.registerUserData.password = this.my_profile.password;
-    this.registerUserData.cpassword = this.my_profile.cpassword;
-    this.registerUserData.shipaddress = this.my_profile.shipaddress;
-    this.registerUserData.role = this.my_profile.role;
-    this.registerUserData.referralToken = this.my_profile.referralToken;
-    this.registerUserData.phone = this.my_profile.phone;
-    this.registerUserData.email = this.my_profile.email;
-    this.registerUserData.name = this.my_profile.name;
-
-    this.service.updateProfile(this.my_profile).subscribe(
-      response => {
-        console.log("registered new user. response = ",response);
-        // this.router.navigate(['/login']);
-      },
-      error => {
-        console.log("eror in registering user = ",error);
-      }
-    );
-  }
-
+  
 }
