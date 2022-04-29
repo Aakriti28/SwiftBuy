@@ -20,12 +20,12 @@ export class UserService {
 
     getCart(): Observable<any> {
         console.log('getCart');
-        return this.http.get('http://localhost:8000/home/cart', { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+        return this.http.get(`http://localhost:8000/home/cart`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
 
-    // getPlaceOrder(paymentid: number) {
-    //     return this.http.post(`http://192.168.0.104:8000/home/order`, (paymentid));
-    // }
+    placeOrder(paymentid: number): Observable<any> {
+        return this.http.post(`http://localhost:8000/home/order`, (paymentid), { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+    }
 
     // register(user: User) {
     //     console.log('register user: ' + JSON.stringify(user));
