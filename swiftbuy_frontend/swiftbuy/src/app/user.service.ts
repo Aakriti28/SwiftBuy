@@ -24,7 +24,11 @@ export class UserService {
         return this.http.get(`http://localhost:8000/catalog/${categoryid}`);
     }    
         
-        
+    addMoney(money: any): Observable<any>{
+        console.log(money)
+        return this.http.post(`http://localhost:8000/addmoney`, money, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+    }
+
     getCart(): Observable<any> {
         console.log('getCart');
         return this.http.get(`http://localhost:8000/cart`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
@@ -61,8 +65,12 @@ export class UserService {
         return this.http.post(`http://localhost:8000/wallet`, {},{ headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });        
     }
 
-    addMoneyToWallet(){
-        return this.http.post(`http://localhost:8000/about`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+    // addMoneyToWallet(){
+    //     return this.http.post(`http://localhost:8000/about`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+    // }
+
+    getBuyHistory(){
+        return this.http.get(`http://localhost:8000/buyinfo/history`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
 
 }

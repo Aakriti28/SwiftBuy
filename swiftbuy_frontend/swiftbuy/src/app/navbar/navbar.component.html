@@ -57,7 +57,7 @@
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
             <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/catalog']">Browse Catalog</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Another action</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/buy_history']">My Buy History</a>
             <a class="dropdown-item waves-light" mdbWavesEffect href="#">Something else here</a>
             <div class="divider dropdown-divider"></div>
             <a class="dropdown-item waves-light" mdbWavesEffect href="#">Separated link</a>
@@ -89,7 +89,7 @@
       <!-- Search form -->
       <form class="form-inline waves-light" mdbWavesEffect>
         <div class="md-form my-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search a product">
+          <input [(ngModel)]="search_text" name="search_text" (keydown)="onKeydown($event)" class="form-control mr-sm-2" type="text" placeholder="Search a product">
         </div>
       </form>
     </links>

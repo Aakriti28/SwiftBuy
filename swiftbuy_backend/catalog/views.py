@@ -35,10 +35,11 @@ def viewproduct(request, productid):
     else :
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
+@csrf_exempt
 def search(request):
     if request.user.is_authenticated:
         query = json.loads(request.body.decode('utf-8').replace("'", '"'))['query']
         products = Product.objects.filter(name__icontains=query).filter(product_desc__icontains=query)
-        return JsonResponse({'status': 'success', 'results': list(products.values())}, status=HTTPStatus.OK)
+        return JsonResponse({'status': 'success', 'results': list(products.values())[:100]}, status=HTTPStatus.OK)
     else :
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)

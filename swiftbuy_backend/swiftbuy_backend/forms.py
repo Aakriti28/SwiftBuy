@@ -7,7 +7,7 @@ import string
 
 # Create your forms here.
 
-class AddMoneyForm(UserCreationForm):
+class AddMoneyForm(forms.Form):
 	amount = forms.IntegerField(required=True)
 	payment_gateway = forms.ModelChoiceField(queryset=Paymentgateway.objects.all(), required=True)
 	
@@ -15,10 +15,5 @@ class AddMoneyForm(UserCreationForm):
 		model = Users
 		fields = ("amount", "payment_gateway")
 
-	def save(self, commit=True):
-		user = super(AddMoneyForm, self).save(commit=False)
-		user.amount = self.cleaned_data['amount']
-		user.payment_gateway = self.cleaned_data['payment_gateway']
-		if commit:
-			user.save()
-		return user
+	def is_valid(self) -> bool :
+		return super().is_valid()

@@ -34,6 +34,10 @@ export class RegisterComponent implements OnInit {
       },
       error => {
         console.log("eror in registering user = ",error);
+        if (error.status == 432) alert("Password and Confirm password should match");
+        else if (error.status == 487) alert("Invalid Referral token");
+        else if (error.status == 415) alert("Invalid Email");
+        else alert("Invalid Credentials");
       }
     );
   }

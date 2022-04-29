@@ -7,6 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 export class CatalogService {
+  public search_data = [] as any;
   private _catalogUrl = 'http://localhost:8000/catalog';
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
@@ -24,5 +25,13 @@ export class CatalogService {
   getCatalogProducts(categoryid: number): Observable<any> {
     console.log('getCatalogProducts');
     return this.http.get(`http://localhost:8000/catalog/${categoryid}`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+  }
+
+  getSearchResults(search_text: string){
+    return this.http.post(`http://localhost:8000/catalog/search`,{'query':search_text}, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+  }
+
+  getAds(){
+    return this.http.get(`http://localhost:8000/home`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
   }
 }

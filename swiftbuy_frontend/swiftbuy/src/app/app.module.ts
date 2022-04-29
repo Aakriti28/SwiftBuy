@@ -37,7 +37,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
 import { ProductComponent } from './product/product.component';
-
+import {MatTableModule} from '@angular/material/table';
+import { AddmoneyComponent } from './addmoney/addmoney.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +61,9 @@ import { ProductComponent } from './product/product.component';
     ProfileComponent,
     WalletComponent,
     UpdateProfileComponent,
-    ProductComponent
+    ProductComponent,
+    AddmoneyComponent,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,
@@ -68,6 +72,7 @@ import { ProductComponent } from './product/product.component';
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
+    MatTableModule,
     MatFormFieldModule,
     MatSelectModule,
     MatListModule,
