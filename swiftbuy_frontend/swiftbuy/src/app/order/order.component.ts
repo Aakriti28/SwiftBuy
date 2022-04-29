@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { Order_Info } from '../order';
 import { UserService } from '../user.service';
 
 @Component({
@@ -8,7 +7,7 @@ import { UserService } from '../user.service';
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
-  payment_id = 1;
+  payment_id = 4;
   constructor( private _user : UserService ) { }
 
   ngOnInit(): void {

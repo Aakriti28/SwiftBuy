@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { NotificationComponent } from './notification/notification.component';
 import { CartComponent } from './cart/cart.component';
+import { OrderComponent } from './order/order.component';
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { SellHistoryComponent } from './sell-history/sell-history.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -29,7 +30,8 @@ const routes: Routes = [
   {path: 'notifications', component: NotificationComponent},
   {path: 'cart', component: CartComponent},
   {path: 'sell_history', component: SellHistoryComponent},
-  {path: 'profile', component: ProfileComponent}
+  {path: 'profile', component: ProfileComponent},
+  {path: 'order', component: OrderComponent}
 ];
 
 // redirect '' to sign up page if user is logged in or to home page if not logged in

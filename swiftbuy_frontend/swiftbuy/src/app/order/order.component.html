@@ -1,1 +1,30 @@
 <p>order works!</p>
+
+<div class="row pt-5">
+    <div class="col-md-6 mx-auto">
+        <div class="card rounded-0">
+            <div class="card-header">
+                <h3 class="mb-0">Payment Method</h3>
+                <div class="card-body">
+                    <form action="" class="form">
+                        <p>
+                            <label id="example-radio-group-label">Which payment Gateway would you like to use?</label> 
+                            <!-- <button matTooltip="You can buy with a seller account!" mat-mini-fab aria-label="Example icon button with a home icon">
+                              <mat-icon>help</mat-icon>
+                            </button> -->
+                            <br>
+                            <mat-radio-group aria-label="Select an option" name="role" [(ngModel)]="payment_id">
+                              <mat-radio-button value=1>UPI</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              <mat-radio-button value=2>Credit Card</mat-radio-button>
+                              <mat-radio-button value=3>Debit Card</mat-radio-button>
+                              <mat-radio-button value=4>Wallet</mat-radio-button>
+                            </mat-radio-group>
+                          </p>
+                        
+                        <button (click)="placeOrder()" type="button" class="btn btn-primary float-right">Place Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

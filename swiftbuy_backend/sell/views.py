@@ -70,8 +70,8 @@ def history(request):
     if request.user.is_authenticated:
         userid = request.user.uid
         transactions = Transaction.objects.filter(seller=userid)
-        products = Product.objects.filter(id=transactions.product_id)
-        return JsonResponse({'transactions': transactions, 'products': products, 'status': 'success'}, status=HTTPStatus.OK)
+        products = Product.objects.filter(id__in=list(transactions.values('product_id')))
+        return JsonResponse({'transactions': list(transactions.values()), 'products': list(products.values()), 'status': 'success'}, status=HTTPStatus.OK)
     else:
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
