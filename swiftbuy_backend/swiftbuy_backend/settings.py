@@ -87,11 +87,11 @@ WSGI_APPLICATION = 'swiftbuy_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'swiftbuy_',                      
-        'USER': 'postgres',
-        'PASSWORD': 'puru1234',
+        'NAME': 'swiftbuy2',                      
+        'USER': 'aadishjain',
+        'PASSWORD': 'Postgres@123',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5431',
     }
 }
 

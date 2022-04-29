@@ -6,7 +6,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
-@csrf_exempt
 def categories(request):
     print(request.user.is_authenticated)
     if request.user.is_authenticated:
