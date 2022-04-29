@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CatalogService } from '../catalog.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-catalog',
@@ -9,7 +10,7 @@ import { CatalogService } from '../catalog.service';
 export class CatalogComponent implements OnInit {
   catalog_list: any = {};
   constructor(private service: CatalogService) { }
-
+  // constructor(private service: CatalogService,public _auth: AuthService) { this._auth._isLoggedIn=true;console.log("logged in status is ", this._auth._isLoggedIn)}
   ngOnInit(): void {
     this.getCatalogFromAPI()
   }

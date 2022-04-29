@@ -1,8 +1,9 @@
 <!--Navbar-->
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
+<div *ngIf="!_auth._isLoggedIn">
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
 
     <!-- Navbar brand -->
-    <mdb-navbar-brand><a class="navbar-brand" href="/home/1/">SwiftBuy</a></mdb-navbar-brand>
+    <mdb-navbar-brand><a class="navbar-brand">SwiftBuy</a></mdb-navbar-brand>
   
     <!-- Collapsible content -->
     <links>
@@ -10,29 +11,52 @@
       <!-- Links -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link waves-light" href="/home/1" [routerLink]="['home/1']" mdbWavesEffect >Home</a> 
+          <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['/login']">Login</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['/register']">Register</a>
+        </li>
+
+       
+      </ul>
+    </links>
+      <!-- Links -->
+  
+  </mdb-navbar>
+  <!--/.Navbar-->
+
+  <router-outlet></router-outlet> 
+</div>
+
+<div *ngIf="_auth._isLoggedIn">
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
+
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand" [routerLink]="['home']">SwiftBuy</a></mdb-navbar-brand>
+  
+    <!-- Collapsible content -->
+    <links>
+  
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link waves-light" [routerLink]="['home']" mdbWavesEffect >Home</a> 
           <!-- <span class="sr-only">(current)</span> -->
         </li>
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['profile']">My Profile</a>
         </li>
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link waves-light" mdbWavesEffect href="/login/" [routerLink]="['login']">Login</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link waves-light" mdbWavesEffect href="/register/" [routerLink]="['register']">Register</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a (click)="logoutUser()" class="nav-link waves-light" mdbWavesEffect href="/login/" [routerLink]="['login']">Logout</a>
+          <button (click)="logoutUser()" class="nav-link waves-light" mdbWavesEffect >Logout</button>
         </li>
   
         <!-- Dropdown -->
         <li class="nav-item dropdown" dropdown routerLinkActive="active">
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect [routerLink]="['buyer']">
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
             Buyer<span class="caret"></span>
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item waves-light" mdbWavesEffect href="/home/1/catalog">Browse Catalog</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/catalog']">Browse Catalog</a>
             <a class="dropdown-item waves-light" mdbWavesEffect href="#">Another action</a>
             <a class="dropdown-item waves-light" mdbWavesEffect href="#">Something else here</a>
             <div class="divider dropdown-divider"></div>
@@ -41,16 +65,20 @@
         </li>
 
         <li class="nav-item dropdown" dropdown routerLinkActive="active">
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect [routerLink]="['seller']">
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect >
             Seller<span class="caret"></span>
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item waves-light" mdbWavesEffect href="/home/1/sellinfo/addproduct">Add Product</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect href="/home/1/update/1">Update Product</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/home/sellinfo/addproduct']">Add Product</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/update']">Update Product</a>
             <a class="dropdown-item waves-light" mdbWavesEffect href="#">Something else here</a>
             <div class="divider dropdown-divider"></div>
             <a class="dropdown-item waves-light" mdbWavesEffect href="#">Separated link</a>
           </div>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['notifications']">Notifications</a>
         </li>
       </ul>
       <!-- Links -->
@@ -68,3 +96,4 @@
   <!--/.Navbar-->
 
   <router-outlet></router-outlet> 
+</div>

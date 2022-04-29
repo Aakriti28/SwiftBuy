@@ -14,9 +14,11 @@ export class RegisterComponent implements OnInit {
     email: '',
     role: '',
     address: '',
-    referral_token: '',
+    referralToken: '',
     password: '',
-    phone: 0
+    phone: 0,
+    cpassword: '',
+    shipaddress: ''
   };
   constructor(private _auth : AuthService, private router : Router) { }
 

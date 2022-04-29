@@ -5,9 +5,11 @@ export class Registration_info {
       public email: string,
       public role: string,
       public address: string,
-      public referral_token: string,
+      public referralToken: string,
       public password: string,
-      public phone: number
+      public cpassword: string,
+      public phone: number,
+      public shipaddress: string
     ) {  }
   
   }

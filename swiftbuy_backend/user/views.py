@@ -45,7 +45,7 @@ def mylogin(request):
 	user = authenticate(request, username=user_info['email'], password=user_info['password'])
 	if user is not None:
 		login(request, user)
-		return JsonResponse({'status': 'success'})
+		return JsonResponse({'status': 'success'}, status=HTTPStatus.OK)
 	else:
 		if Users.objects.filter(email=user_info['email'], password=user_info['password']).exists():
 			user = Users.objects.get(email=user_info['email'], password=user_info['password'])
