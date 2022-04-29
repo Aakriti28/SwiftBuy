@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+import datetime
 
 import sys
 import json
@@ -45,7 +46,11 @@ def mylogin(request):
 	user = authenticate(request, username=user_info['email'], password=user_info['password'])
 	if user is not None:
 		login(request, user)
-		return JsonResponse({'status': 'success'}, status=HTTPStatus.OK)
+		response =  JsonResponse({'status': 'success'}, status=HTTPStatus.OK)
+		response.set_cookie('last_connection',datetime.datetime.now())
+		response.set_cookie('username',datetime.datetime.now())
+		# return JsonResponse({'status': 'success'}, status=HTTPStatus.OK)
+		return response
 	else:
 		if Users.objects.filter(email=user_info['email'], password=user_info['password']).exists():
 			user = Users.objects.get(email=user_info['email'], password=user_info['password'])

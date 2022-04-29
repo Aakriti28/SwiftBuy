@@ -18,6 +18,7 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { SellinfoComponent } from './sellinfo/sellinfo.component';
 import { SellinfoUpdateProductComponent } from './sellinfo-update-product/sellinfo-update-product.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatListModule} from '@angular/material/list';
 import {MatSelectModule} from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
@@ -32,6 +33,10 @@ import { NotificationComponent } from './notification/notification.component';
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
 import { UpdateProductComponent } from './update-product/update-product.component';
+import { ProfileComponent } from './profile/profile.component';
+import { WalletComponent } from './wallet/wallet.component';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +55,11 @@ import { UpdateProductComponent } from './update-product/update-product.componen
     NotificationComponent,
     CartComponent,
     OrderComponent,
-    UpdateProductComponent
+    UpdateProductComponent,
+    ProfileComponent,
+    WalletComponent,
+    UpdateProfileComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +70,7 @@ import { UpdateProductComponent } from './update-product/update-product.componen
     MatButtonModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatListModule,
     FormsModule,
     ReactiveFormsModule,
     MatIconModule,

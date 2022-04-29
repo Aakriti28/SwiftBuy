@@ -1,0 +1,67 @@
+<!-- <p>profile works!</p> -->
+
+<div style="display: flex;">
+    <mat-card class="example-card custom">
+      <mat-card-title-group>
+        <mat-card-title> Name </mat-card-title>
+        <mat-card-subtitle>{{this.my_profile.name}}</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card>
+
+    <mat-card class="example-card custom">
+      <mat-card-title-group>
+        <mat-card-title> Email </mat-card-title>
+        <mat-card-subtitle>{{this.my_profile.email}}</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card>
+
+    <mat-card class="example-card custom">
+      <mat-card-title-group>
+        <mat-card-title> Role </mat-card-title>
+        <mat-card-subtitle>{{this.my_profile.role}}</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card>
+
+    <mat-card class="example-card custom">
+      <mat-card-title-group>
+        <mat-card-title> Address </mat-card-title>
+        <mat-card-subtitle>{{this.my_profile.address}}</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card>
+  </div>
+
+  <div style="display: flex;">
+    <mat-card class="example-card custom">
+        <mat-card-title-group>
+          <mat-card-title> Shipping Address </mat-card-title>
+          <mat-card-subtitle>{{this.my_profile.shipping_address}}</mat-card-subtitle>
+        </mat-card-title-group>
+      </mat-card>
+
+        <mat-card class="example-card custom">
+            <mat-card-title-group>
+            <mat-card-title> Phone </mat-card-title>
+            <mat-card-subtitle>{{this.my_profile.phone}}</mat-card-subtitle>
+            </mat-card-title-group>
+        </mat-card>
+
+        <mat-card class="example-card custom">
+            <mat-card-title-group>
+            <mat-card-title> Wallet Amount </mat-card-title>
+            <mat-card-subtitle>{{this.my_profile.wallet_amount}}</mat-card-subtitle>
+            </mat-card-title-group>
+        </mat-card>
+
+        <mat-card class="example-card custom">
+            <mat-card-title-group>
+            <mat-card-title> Referral Token </mat-card-title>
+            <mat-card-subtitle>{{this.my_profile.referral_token}}</mat-card-subtitle>
+        </mat-card-title-group>
+        </mat-card>
+  </div>
+<div>
+    <button mat-raised-button color="primary" [routerLink]= "['/profile/update']" id="myButton1" class="float-left submit-button" >Update Profile</button>
+</div>
+<div>
+    <button mat-raised-button color="primary" [routerLink] = "['/addmoney']" id="myButton2" class="float-left submit-button" >Add Money</button>
+</div>

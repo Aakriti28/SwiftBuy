@@ -7,18 +7,24 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 # Create your views here.
+# @csrf_exempt
 def categories(request):
-    print(request.user.is_authenticated)
+    # print(request.user.is_authenticated)
+    print("ATLEAST here")
     if request.user.is_authenticated:
+        print("NOT SO SAD")
         categories = Category.objects.all()
         return JsonResponse({'status': 'success', 'results': list(categories.values())}, status=HTTPStatus.OK)
     else :
+        print("SAD")
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
 def products(request, categoryid):
     if request.user.is_authenticated:
-        products = Product.objects.filter(category_id=categoryid)
-        return JsonResponse({'status': 'success', 'results': list(products.values())}, status=HTTPStatus.OK)
+        products = list(Product.objects.filter(category_id=categoryid).values())
+        for p in products :
+            p['images'] = p['images'][1:-1].replace('\\', '').split(',')[0]
+        return JsonResponse({'status': 'success', 'results': products}, status=HTTPStatus.OK)
     else :
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
  

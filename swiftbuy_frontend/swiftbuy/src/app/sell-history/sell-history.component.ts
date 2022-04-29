@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SellerService } from '../seller.service';
 
 @Component({
   selector: 'app-sell-history',
@@ -6,10 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sell-history.component.scss']
 })
 export class SellHistoryComponent implements OnInit {
-
-  constructor() { }
+  sell_history_list: any = {};
+  constructor(private service: SellerService) { }
 
   ngOnInit(): void {
+    this.getHistoryFromAPI()
+  }
+
+  getHistoryFromAPI(){
+    this.service.getSellHistory().subscribe(
+      response => {
+        this.sell_history_list = response;
+        console.log(this.sell_history_list)
+      },
+      error => {
+        console.log("error in get_sell_history : ",error)
+      }
+    )
   }
 
 }

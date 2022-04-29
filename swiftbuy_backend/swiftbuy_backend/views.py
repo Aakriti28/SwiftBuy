@@ -11,6 +11,8 @@ import sys
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import F, Value, CharField, Sum
 from itertools import chain
+import json
+
 # Create your views here.
 
 def home(request):
@@ -20,20 +22,23 @@ def home(request):
 	else:
 		return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
+@csrf_exempt
 def about(request):
 	if request.user.is_authenticated:
 		if request.method == 'GET':
 			details = Users.objects.filter(uid=request.user.uid).values()[0]
 			return JsonResponse({'status': 'success', 'results': details}, status=HTTPStatus.OK)
 		elif request.method == 'POST':
-			info = json.loads(request.body.decode('utf-8').replace("'", '"'))
+			user = json.loads(request.body.decode('utf8').replace("'",'"'))['user']
+			print(user)
 			params = {
-				'name': info['name'],
-				'email': info['email'],
-				'phone': info['phone'],
-				'address': info['address'],
-				'shipping_address': info['shipaddress']
+				'name': user['name'],
+				'email': user['email'],
+				'phone': user['phone'],
+				'address': user['address'],
+				'shipping_address': user['shipaddress']
 			}
+			print("params :",params)
 			Users.objects.filter(uid=request.user.uid).update(**params)
 			return JsonResponse({'status': 'success', 'results': 'Profile updated'}, status=HTTPStatus.OK)
 	else:

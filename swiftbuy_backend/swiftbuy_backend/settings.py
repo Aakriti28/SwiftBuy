@@ -25,8 +25,13 @@ SECRET_KEY = 'django-insecure-m3ag1*$nq@n0!kpz5x#&qhu7=6i8*kkun*olob$sx88ottxbx@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.104', 'localhost', 'localhost', '*']
-
+ALLOWED_HOSTS = ['192.168.0.104', 'localhost', '127.0.0.1', '*']
+CORS_ORIGIN_WHITELIST = (
+"http://127.0.0.1:4200",
+"http://localhost:4200",
+"https://127.0.0.1:4200",
+"https://localhost:4200",
+)
 
 # Application definition
 
@@ -60,6 +65,26 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_CREDENTIALS = True
 
+CORS_ALLOW_METHODS = (
+'DELETE',
+'GET',
+'OPTIONS',
+'PATCH',
+'POST',
+'PUT',)
+
+CORS_ALLOW_HEADERS = (
+'accept',
+'accept-encoding',
+'authorization',
+'content-type',
+'dnt',
+'origin',
+'user-agent',
+'x-csrftoken',
+'x-requested-with',
+'Access-Control-Allow-Origin',)
+
 ROOT_URLCONF = 'swiftbuy_backend.urls'
 
 TEMPLATES = [
@@ -87,11 +112,11 @@ WSGI_APPLICATION = 'swiftbuy_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'swiftbuy2',                      
-        'USER': 'aadishjain',
-        'PASSWORD': 'Postgres@123',
+        'NAME': 'swiftbuy_',                      
+        'USER': 'postgres',
+        'PASSWORD': 'puru1234',
         'HOST': 'localhost',
-        'PORT': '5431',
+        'PORT': '5432',
     }
 }
 
