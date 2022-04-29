@@ -15,7 +15,7 @@ export class UserService {
 
     getProduct(productid: number): Observable<any> {
         console.log('getProduct productid: ' + productid);
-        return this.http.get(`http://localhost:8000/catalog/products/${productid}`);
+        return this.http.get('http://localhost:8000/catalog/products/'+String(productid));
 
     }
 
