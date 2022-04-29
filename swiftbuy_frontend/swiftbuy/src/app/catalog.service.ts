@@ -7,7 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 export class CatalogService {
-  private _catalogUrl = 'http://localhost:8000/catalog';
+  private _catalogUrl = 'http://127.0.0.1:8000/catalog';
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   getCatalog(): Observable<any>{
