@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
+import { Registration_info } from './registration_details';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -45,6 +46,10 @@ export class UserService {
         return this.http.get(`http://localhost:8000/about`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
 
+    updateProfile(user:Registration_info){
+        return this.http.post(`http://localhost:8000/about`, user, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+    }
+
     getWalletHistory(){
         return this.http.get(`http://localhost:8000/wallet`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });        
     }
@@ -52,4 +57,5 @@ export class UserService {
     addMoneyToWallet(){
         return this.http.post(`http://localhost:8000/about`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
+
 }

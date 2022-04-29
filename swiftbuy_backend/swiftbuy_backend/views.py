@@ -15,6 +15,7 @@ def home(request):
 	else:
 		return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
+@csrf_exempt
 def about(request):
 	if request.user.is_authenticated:
 		if request.method == 'GET':
@@ -22,11 +23,11 @@ def about(request):
 			return JsonResponse({'status': 'success', 'results': details}, status=HTTPStatus.OK)
 		elif request.method == 'POST':
 			params = {
-				'name': request.POST['name'],
-				'email': request.POST['email'],
-				'phone': request.POST['phone'],
-				'address': request.POST['address'],
-				'shipping_address': request.POST['shipping_address']
+				'name': request.POST.get('name'),
+				'email': request.POST.get('email'),
+				'phone': request.POST.get('phone'),
+				'address': request.POST.get('address'),
+				'shipping_address': request.POST.get('shipping_address')
 			}
 			Users.objects.filter(uid=request.user.uid).update(**params)
 			return JsonResponse({'status': 'success', 'results': 'Profile updated'}, status=HTTPStatus.OK)
