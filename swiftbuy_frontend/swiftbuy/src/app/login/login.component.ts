@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
       res => {
         console.log("success in login ",res);
         this._auth._isLoggedIn = true;
-        this.router.navigate(['/catalog'])
+        this.router.navigate(['/home'])
       },
       // , 
       err => {

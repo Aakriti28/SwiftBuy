@@ -31,6 +31,7 @@ import { AuthService } from './auth.service';
 import { NotificationComponent } from './notification/notification.component';
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
+import { UpdateProductComponent } from './update-product/update-product.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { OrderComponent } from './order/order.component';
     LoginComponent,
     NotificationComponent,
     CartComponent,
-    OrderComponent
+    OrderComponent,
+    UpdateProductComponent
   ],
   imports: [
     BrowserModule,

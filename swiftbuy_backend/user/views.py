@@ -45,11 +45,13 @@ def mylogin(request):
 	user = authenticate(request, username=user_info['email'], password=user_info['password'])
 	if user is not None:
 		login(request, user)
+		print("returning thisqa")
 		return JsonResponse({'status': 'success'})
 	else:
 		if Users.objects.filter(email=user_info['email'], password=user_info['password']).exists():
 			user = Users.objects.get(email=user_info['email'], password=user_info['password'])
 			login(request, user)
+			print("returning this")
 			return JsonResponse({'status': 'success'}, status=HTTPStatus.OK)
 	return JsonResponse({'status': 'auth_failure'}, status=HTTPStatus.UNAUTHORIZED)
 
