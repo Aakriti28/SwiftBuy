@@ -18,6 +18,7 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { SellinfoComponent } from './sellinfo/sellinfo.component';
 import { SellinfoUpdateProductComponent } from './sellinfo-update-product/sellinfo-update-product.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatListModule} from '@angular/material/list';
 import {MatSelectModule} from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
@@ -67,6 +68,7 @@ import { UpdateProfileComponent } from './update-profile/update-profile.componen
     MatButtonModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatListModule,
     FormsModule,
     ReactiveFormsModule,
     MatIconModule,
