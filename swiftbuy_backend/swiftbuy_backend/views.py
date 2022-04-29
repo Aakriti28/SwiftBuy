@@ -9,7 +9,7 @@ from .forms import AddMoneyForm
 from django.contrib.auth.decorators import login_required
 import sys
 from django.views.decorators.csrf import csrf_exempt
-from django.db.models import F, Value, CharField, Sum
+from django.db.models import F, Value, CharField, Sum, FloatField
 from itertools import chain
 import json
 import numpy as np
@@ -84,16 +84,18 @@ def addmoney(request):
 	else:
 		return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
+@csrf_exempt
 def cart(request):
 	if request.user.is_authenticated:
 		if request.method == 'GET':
-			product_details = Product.objects.filter(user_id=request.user.uid).select_related('incart').values()
-			total_amount = Incart.objects.filter(user_id=request.user.uid).aggregate(total=Sum(F('quantity')*F('product__discount'))).values()[0]['total']
-			return JsonResponse({'status': 'success', 'cart_products': list(product_details.values()), 'total_amount': total_amount}, status=HTTPStatus.OK)
+			product_details = Product.objects.select_related('incart').filter(incart__buyer_id=request.user.uid).values()
+			total_amount = list(Incart.objects.filter(buyer_id=request.user.uid).aggregate(total=Sum(F('quantity')*F('product__discount'), output_field=FloatField())).values())[0]
+			return JsonResponse({'status': 'success', 'cart_products': list(product_details), 'total_amount': total_amount}, status=HTTPStatus.OK)
 		elif request.method == 'POST':
 			info = json.loads(request.body.decode('utf-8').replace("'", '"'))
 			params = {
-				'user_id': request.user.uid,
+				'id': np.random.randint(1000, 10000),
+				'buyer_id': request.user.uid,
 				'product_id': info['product_id'],
 				'quantity': info['quantity']
 			}
@@ -117,44 +119,48 @@ def wishlist(request):
 			return JsonResponse({'status': 'success', 'results': 'Product added to wishlist.'}, status=HTTPStatus.OK)
 	else:
 		return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
-
+@csrf_exempt
 def order(request):
 	if request.user.is_authenticated:
-		cart_products = Incart.objects.filter(user_id=request.user.uid)
-		total_amount = Incart.objects.filter(user_id=request.user.uid).aggregate(total=Sum(F('quantity')*F('product__discount'))).values()[0]['total']
-		new_balance = Users.objects.get(uid=request.user.uid).wallet_amount - total_amount
+		cart_products = Incart.objects.filter(buyer_id=request.user.uid).values()
+		total_amount = list(Incart.objects.filter(buyer_id=request.user.uid).aggregate(total=Sum(F('quantity')*F('product__discount'), output_field = FloatField())).values())[0]
+		if total_amount is None : total_amount = 0
+		new_balance = Users.objects.filter(uid=request.user.uid).values()[0]['wallet_amount'] - total_amount
 		info = json.loads(request.body.decode('utf-8').replace("'", '"'))
-		payment_id = info['payment_id']
+		payment_id = int(info)
 		if payment_id == 4 :
 			if new_balance < 0 :
 				return JsonResponse({'status': 'failure', 'results': 'Insufficient balance in wallet, please choose a different payment method or add money to your wallet.'}, status=HTTPStatus.BAD_REQUEST)
-			Users.objects.filter(id=request.user.uid).update(wallet_amount=new_balance)
+			Users.objects.filter(uid=request.user.uid).update(wallet_amount=new_balance)
 		params = {
+			'order_id': np.random.randint(20000, 100000),
 			'user_id': request.user.uid,
 			'payment_id': payment_id,
 			'amount': total_amount,
-			'trasaction_time': info['transaction_time']
+			'trasaction_time': datetime.now()
 		}
 		Orders.objects.create(**params)
-		order_id = Orders.objects.filter(user_id=request.user.uid, transaction_time=info['transaction_time'])
+		order_id = Orders.objects.filter(user_id=request.user.uid, trasaction_time=params['trasaction_time'])
 		
 		for product in cart_products:
-			seller_id = Product.objects.get(id=product.product_id).seller_id
+			seller_id = Product.objects.filter(product_id=product['product_id']).values('seller_id')[0]['seller_id']
 			params = {
+				'id': np.random.randint(200, 20000),
 				'seller_id': seller_id,
 				'buyer_id': request.user.uid,
-				'order_id': order_id,
-				'product_id': product.product_id,
-				'quantity': product.quantity
+				'order_id': order_id.values()[0]['order_id'],
+				'product_id': product['product_id'],
+				'quantity': product['quantity']
 			}
-			new_quantity = Product.objects.filter(id=product.product_id).values()[0]['quantity_available'] - product.quantity
+			print(params)
+			new_quantity = Product.objects.filter(product_id=product['product_id']).values()[0]['quantity_available'] - product['quantity']
 			if new_quantity < 0 :
 				return JsonResponse({'status': 'failure', 'results': 'Insufficient quantity in stock.'}, status=HTTPStatus.BAD_REQUEST)
 			Transaction.objects.create(**params)
-			Incart.objects.filter(user_id=request.user.uid).delete()
-			Users.objects.filter(id=seller_id).update(wallet_amount=Users.objects.get(uid=seller_id).wallet_amount + product.quantity * Product.objects.get(id=product.product_id).price * (1 - Product.objects.get(id=product.product_id).discount))
-			Product.objects.filter(id=product.product_id).update(quantity=new_quantity)
-			Notification.objects.create(user_id=seller_id, message="You just sold " + str(product.quantity) + " " + Product.objects.get(id=product.product_id).name + ".", time=datetime.now(), seen=0)
+			Incart.objects.filter(buyer_id=request.user.uid).delete()
+			Users.objects.filter(uid=seller_id).update(wallet_amount=Users.objects.filter(uid=seller_id).values('wallet_amount')[0]['wallet_amount'] + product['quantity'] * Product.objects.filter(product_id=product['product_id']).values()[0]['discount'])
+			Product.objects.filter(product_id=product['product_id']).update(quantity_available=new_quantity)
+			Notification.objects.create(user_id=seller_id, notif_text="You just sold " + str(product['quantity']) + " " + Product.objects.filter(product_id=product['product_id']).values()[0]['name'] + ".", notif_timestamp=datetime.now(), seen=0)
 	
 		return JsonResponse({'status': 'success', 'results': 'Order placed successfully.'}, status=HTTPStatus.OK)
 	else:

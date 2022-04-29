@@ -1,23 +1,27 @@
-<p>Thank You for your Patience!</p>
-<div style="display: flex;">
+<!-- <p>Thank You for your Patience!</p> -->
+<div class="centre">
     <mat-card class="example-card custom">
       <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
       <mat-card-title-group>
-        <mat-card-title> {{product.name}} </mat-card-title>
-        <mat-card-subtitle>Category: {{product.category}}</mat-card-subtitle>
-        <mat-card-subtitle>Brand: {{product.brand}}</mat-card-subtitle>
-        <mat-card-subtitle>Rs. {{product.price}}</mat-card-subtitle>
-        <mat-card-subtitle> Discount: {{product.discount}}</mat-card-subtitle>
-        <mat-card-subtitle>InStock: {{product.quantity}}</mat-card-subtitle>
-        <mat-card-subtitle>Description: {{product.description}}</mat-card-subtitle>
+        <mat-card-title> {{product.results.name}} </mat-card-title>
+        <mat-card-subtitle>Category: {{product.results.category_name}}</mat-card-subtitle>
+        <mat-card-subtitle>Brand: {{product.results.brand_name}}</mat-card-subtitle>
+        <mat-card-subtitle>MRP Rs. {{product.results.price}}</mat-card-subtitle>
+        <mat-card-subtitle> Discounted Price: Rs. {{product.results.discount}}</mat-card-subtitle>
+        <mat-card-subtitle>InStock: {{product.results.quantity_available}}</mat-card-subtitle>
+        <mat-card-subtitle>Description: {{product.results.product_desc}}</mat-card-subtitle>
         <!-- <mat-card-subtitle>Rs. 50</mat-card-subtitle> -->
-        <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+        <img mat-card-lg-image src={{product.results.images}} >
       </mat-card-title-group>
     </mat-card>
   </div>
 
-  <div>
-    <button mat-raised-button color="primary" [routerLink]= "['/cart']" id="myButton1" class="float-left submit-button" >Add To Cart</button>
+<div class="centre">
+  <input [(ngModel)]="cart.quantity" type="number" class="form-control rounded-0" min=1 value=1 class="cartadd" required>
+</div>
+
+<div class="centre">
+  <button mat-raised-button color="primary" [routerLink]= "['/cart']" id="myButton1" (click)="buynow()" class="float-left submit-button cartadd" >Add To Cart</button>
 </div>
 
 

@@ -24,7 +24,7 @@ export class CatalogService {
 
   getCatalogProducts(categoryid: number): Observable<any> {
     console.log('getCatalogProducts');
-    return this.http.get(`http://localhost:8000/catalog/${categoryid}`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+    return this.http.get('http://localhost:8000/catalog/'+String(categoryid), { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
   }
 
   getSearchResults(search_text: string){

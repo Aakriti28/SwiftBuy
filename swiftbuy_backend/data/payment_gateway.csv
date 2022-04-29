@@ -1,0 +1,5 @@
+,payment_id,method_name
+0,1,UPI
+1,2,Credit Card
+2,3,Debit Card
+3,4,Wallet

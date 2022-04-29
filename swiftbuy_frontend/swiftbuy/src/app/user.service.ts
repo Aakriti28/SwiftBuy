@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { Registration_info } from './registration_details';
+import {Cart} from './cart';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -15,13 +16,13 @@ export class UserService {
 
     getProduct(productid: number): Observable<any> {
         console.log('getProduct productid: ' + productid);
-        return this.http.get(`http://localhost:8000/catalog/products/${productid}`);
+        return this.http.get('http://localhost:8000/catalog/products/'+String(productid), { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true} );
 
     }
 
     getCatalogProducts(categoryid: number): Observable<any> {
         console.log('getCatalogProducts');
-        return this.http.get(`http://localhost:8000/catalog/${categoryid}`);
+        return this.http.get('http://localhost:8000/catalog/' + String(categoryid), { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true});
     }    
         
     addMoney(money: any): Observable<any>{
@@ -52,11 +53,11 @@ export class UserService {
     //     return this.http.delete(`${config.apiUrl}/users/${id}`);
     // }
 
-    getProfile(){
-        return this.http.get(`http://localhost:8000/about`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+    getProfile(): Observable<any>{
+        return this.http.get(`http://localhost:8000/about/`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
 
-    updateProfile(user:Registration_info){
+    updateProfile(user:Registration_info) : Observable<any>{
         console.log(user)
         return this.http.post(`http://localhost:8000/about`, {user}, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
@@ -71,6 +72,10 @@ export class UserService {
 
     getBuyHistory(){
         return this.http.get(`http://localhost:8000/buyinfo/history`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+    }
+
+    addToCart(cart: Cart): Observable<any>{
+        return this.http.post(`http://localhost:8000/cart`, cart,  { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true }); 
     }
 
 }

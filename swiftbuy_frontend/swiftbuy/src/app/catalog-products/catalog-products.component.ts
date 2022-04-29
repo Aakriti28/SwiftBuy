@@ -12,14 +12,15 @@ export class CatalogProductsComponent implements OnInit {
 
   catalog_products = [] as any;
   id: number;
+  sub: any;
   constructor(private route: ActivatedRoute, private service: CatalogService) { 
     this.id=1;
   }
 
   ngOnInit(): void {
-    // this.sub = this.route.params.subscribe(params => {
-    //   this.id = +params['id']; // (+) converts string 'id' to a number
-  //  });
+    this.sub = this.route.params.subscribe(params => {
+      this.id = +params['category_id']; // (+) converts string 'id' to a number
+   });
    this.getCatalogProducts();
   }
 
@@ -27,7 +28,10 @@ export class CatalogProductsComponent implements OnInit {
 
     this.service.getCatalogProducts(this.id)
       .pipe(first())
-      .subscribe(data => this.catalog_products = data);
+      .subscribe(data => {
+        this.catalog_products = data;
+        console.log(this.catalog_products);
+      });
     
   }
 
