@@ -130,6 +130,7 @@ def order(request):
 	else:
 		return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
+@csrf_exempt
 def notifications(request):
 	print(request.user.is_authenticated, file=sys.stderr)
 	if request.user.is_authenticated:
