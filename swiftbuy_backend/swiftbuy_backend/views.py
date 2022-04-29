@@ -6,6 +6,8 @@ from .forms import AddMoneyForm
 from django.contrib.auth.decorators import login_required
 import sys
 from django.views.decorators.csrf import csrf_exempt
+import json
+
 # Create your views here.
 
 def home(request):
@@ -22,13 +24,16 @@ def about(request):
 			details = Users.objects.filter(uid=request.user.uid).values()[0]
 			return JsonResponse({'status': 'success', 'results': details}, status=HTTPStatus.OK)
 		elif request.method == 'POST':
+			user = json.loads(request.body.decode('utf8').replace("'",'"'))['user']
+			print(user)
 			params = {
-				'name': request.POST.get('name'),
-				'email': request.POST.get('email'),
-				'phone': request.POST.get('phone'),
-				'address': request.POST.get('address'),
-				'shipping_address': request.POST.get('shipping_address')
+				'name': user['name'],
+				'email': user['email'],
+				'phone': user['phone'],
+				'address': user['address'],
+				'shipping_address': user['shipaddress']
 			}
+			print("params :",params)
 			Users.objects.filter(uid=request.user.uid).update(**params)
 			return JsonResponse({'status': 'success', 'results': 'Profile updated'}, status=HTTPStatus.OK)
 	else:
