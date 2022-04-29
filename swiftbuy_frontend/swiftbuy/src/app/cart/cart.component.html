@@ -9,10 +9,10 @@
     <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
     <mat-card-title-group>
       <mat-card-title> <a [routerLink]="['/cart', 2]">Cart</a> </mat-card-title>
-      <mat-card-subtitle>product.name</mat-card-subtitle>
-      <mat-card-subtitle>product.price</mat-card-subtitle>
-      <mat-card-subtitle>product.quantity</mat-card-subtitle>
-      <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+      <mat-card-subtitle>{{product.name}}</mat-card-subtitle>
+      <mat-card-subtitle>{{product.price}}</mat-card-subtitle>
+      <mat-card-subtitle>{{product.quantity}}</mat-card-subtitle>
+      <!-- <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" > -->
     </mat-card-title-group>
   </mat-card>
 </div>
