@@ -1,3 +1,15 @@
-<p>profile works!</p>
-update profile btn
-wallet 
+<!-- <p>profile works!</p> -->
+<mat-list>
+    <mat-list-item> {{this.my_profile.name}} </mat-list-item>
+    <mat-list-item> {{this.my_profile.email}} </mat-list-item>
+    <mat-list-item> {{this.my_profile.role}} </mat-list-item> 
+    <mat-list-item> {{this.my_profile.address}} </mat-list-item>
+    <mat-list-item> {{this.my_profile.shipping_address}} </mat-list-item>
+    <mat-list-item> {{this.my_profile.phone}} </mat-list-item>
+    <mat-list-item> {{this.my_profile.wallet_amount}} </mat-list-item>
+    <mat-list-item> {{this.my_profile.referral_token}} </mat-list-item>
+    <mat-list-item> {{this.my_profile.last_login}} </mat-list-item>
+</mat-list>
+
+<button mat-raised-button color="primary" onclick="location.href = '/profile/update';" id="myButton1" class="float-left submit-button" >Update Profile</button>
+<button mat-raised-button color="primary" onclick="location.href = '/addmoney';" id="myButton2" class="float-left submit-button" >Add Money</button>
