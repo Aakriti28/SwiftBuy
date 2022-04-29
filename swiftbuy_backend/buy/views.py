@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from django.shortcuts import render
-from user.models import Orders, Transaction, Review
+from user.models import Orders, Transaction, Review, Product
 from django.http import JsonResponse
 from .forms import AddReviewForm
 
@@ -9,8 +9,14 @@ from .forms import AddReviewForm
 def history(request):
     if request.user.is_authenticated:
         userid = request.user.uid
-        results = Transaction.objects.all().raw('SELECT * FROM Orders natural join (SELECT * FROM Transaction WHERE buyer_id = %s group by order_id) as S group by order.order_id, order.timestamp ORDER BY timestamp DESC', [userid])
-        return JsonResponse({'status': 'success', 'results': list(results.values())}, status=HTTPStatus.OK)
+        quantities = list(Transaction.objects.filter(buyer_id=userid).values_list('product_id', 'quantity').order_by('product_id'))
+        product_ids = [x[0] for x in quantities]
+        products = list(Product.objects.filter(product_id__in=product_ids).values().order_by('product_id'))
+        print(products)
+        print(quantities)
+        for i in range(len(quantities)) :
+            products[i]['quantity'] = quantities[i][1]
+        return JsonResponse({'status': 'success', 'results': products}, status=HTTPStatus.OK)
     else:
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 

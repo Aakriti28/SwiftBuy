@@ -5,6 +5,8 @@
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
 #   * Remove `` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
+from sqlite3 import Timestamp
+from time import time
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -16,6 +18,7 @@ class Addmoney(models.Model):
     user = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True)
     payment = models.ForeignKey('Paymentgateway', models.DO_NOTHING, blank=True, null=True)
     amount = models.IntegerField(blank=True, null=True)
+    timestamp = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         
@@ -275,6 +278,26 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    def create_superuser(self, email, password):
+        """
+        Creates and saves a superuser with the given email, date of
+        birth and password.
+        """
+        params = {
+            'email': email,
+            'password': password,
+            'name': 'admin',
+            'phone': 'admin',
+            'address': 'admin',
+            'shipping_address': 'admin',
+            'referral_token': 'admin',
+            'wallet_amount': 1000000,
+        }
+        user = self.create_user(params)
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
+
 class Users(AbstractBaseUser):
     uid = models.AutoField(primary_key=True)
     name = models.TextField(blank=True, null=True)
@@ -286,6 +309,9 @@ class Users(AbstractBaseUser):
     wallet_amount = models.IntegerField(blank=True, null=True)
     referral_token = models.TextField(blank=True, null=True)
     role = models.TextField(blank=True, null=True)
+    # is_active = models.IntegerField(blank=True, null=True)
+    # is_admin = models.IntegerField(blank=True, null=True)
+    
 
     objects = UserManager()
 

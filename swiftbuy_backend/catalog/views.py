@@ -1,8 +1,10 @@
 from http import HTTPStatus
+from urllib.request import Request
 from django.shortcuts import render
 from django.http import JsonResponse
 from user.models import Category, Product
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 # Create your views here.
 # @csrf_exempt
@@ -19,23 +21,24 @@ def categories(request):
 
 def products(request, categoryid):
     if request.user.is_authenticated:
-        products = Product.objects.filter(category_id=categoryid)
-        return JsonResponse({'status': 'success', 'results': list(products.values())}, status=HTTPStatus.OK)
+        products = list(Product.objects.filter(category_id=categoryid).values())
+        for p in products :
+            p['images'] = p['images'][1:-1].replace('\\', '').split(',')[0]
+        return JsonResponse({'status': 'success', 'results': products}, status=HTTPStatus.OK)
     else :
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
  
 def viewproduct(request, productid):
     if request.user.is_authenticated:
-        product = Product.objects.get(product_id=productid)
-        return JsonResponse({'status': 'success', 'results': product.__dict__}, status=HTTPStatus.OK)
+        product = Product.objects.filter(product_id=productid).values()[0]
+        return JsonResponse({'status': 'success', 'results': product}, status=HTTPStatus.OK)
     else :
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
 def search(request):
     if request.user.is_authenticated:
-        query = request.GET['query']
-        # products = Product.objects.filter(name__icontains=query)
-        products = Product.objects.all().raw('SELECT name, price, discount FROM product natural join brand WHERE name LIKE %s OR description LIKE %s OR brand.name LIKE %s LIMIT 5;', ['%'+query+'%', '%'+query+'%', '%'+query+'%'])
+        query = json.loads(request.body.decode('utf-8').replace("'", '"'))['query']
+        products = Product.objects.filter(name__icontains=query).filter(product_desc__icontains=query)
         return JsonResponse({'status': 'success', 'results': list(products.values())}, status=HTTPStatus.OK)
     else :
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)

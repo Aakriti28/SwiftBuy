@@ -55,12 +55,12 @@ def mylogin(request):
 		if Users.objects.filter(email=user_info['email'], password=user_info['password']).exists():
 			user = Users.objects.get(email=user_info['email'], password=user_info['password'])
 			login(request, user)
+			print("request.user.is_authenticated", request.user.is_authenticated)
 			return JsonResponse({'status': 'success'}, status=HTTPStatus.OK)
 	return JsonResponse({'status': 'auth_failure'}, status=HTTPStatus.UNAUTHORIZED)
 
 @csrf_exempt
 def mylogout(request):
-	# print(request.user.is_authenticated, file=sys.stderr)
 	logout(request)
 	return JsonResponse({'status': 'success'}, status=HTTPStatus.OK)
 
