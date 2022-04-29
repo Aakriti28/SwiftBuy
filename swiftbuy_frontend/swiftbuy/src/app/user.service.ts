@@ -10,15 +10,21 @@ export class UserService {
 
     getNotifications(): Observable<any> {
         console.log('getNotifications');
-        return this.http.get(`http://127.0.0.1:8000/notifications`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+        return this.http.get(`http://localhost:8000/notifications`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
 
-    // getProduct(productid: number) {
-    //     console.log('getProduct productid: ' + productid);
-    //     return this.http.get<Product>(`http://192.168.0.104:8000/home/catalog/products/${productid}`);
+    getProduct(productid: number): Observable<any> {
+        console.log('getProduct productid: ' + productid);
+        return this.http.get(`http://localhost:8000/catalog/products/${productid}`);
 
-    // }
+    }
 
+    getCatalogProducts(categoryid: number): Observable<any> {
+        console.log('getCatalogProducts');
+        return this.http.get(`http://localhost:8000/catalog/${categoryid}`);
+    }    
+        
+        
     getCart(): Observable<any> {
         console.log('getCart');
         return this.http.get(`http://localhost:8000/cart`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
