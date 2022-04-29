@@ -8,6 +8,7 @@ import {AddProductComponent} from './add-product/add-product.component';
 import {SellinfoUpdateProductComponent} from './sellinfo-update-product/sellinfo-update-product.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { NotificationComponent } from './notification/notification.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   {path:'home/:userid/catalog', component:CatalogComponent},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
-  {path: 'catalog', component: CatalogComponent}
+  {path: 'catalog', component: CatalogComponent},
+  {path: 'notifications', component: NotificationComponent}
 ];
 
 // redirect '' to sign up page if user is logged in or to home page if not logged in

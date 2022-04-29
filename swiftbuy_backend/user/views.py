@@ -47,14 +47,20 @@ def mylogin(request):
 		return JsonResponse({'status': 'success'})
 	else:
 		if Users.objects.filter(email=user_info['email'], password=user_info['password']).exists():
-			# print("hello", file=sys.stderr)
 			user = Users.objects.get(email=user_info['email'], password=user_info['password'])
 			login(request, user)
+			request.session['user_id'] = user.uid
+			request.session.modified = True
 			return JsonResponse({'status': 'success'})
 	return JsonResponse({'status': 'failure'})
 
 @csrf_exempt
 def mylogout(request):
 	logout(request)
+	try:
+		del request.session['user_id']
+		request.session.flush()
+	except KeyError:
+		pass
 	return JsonResponse({'status': 'Logout successful.'})
 

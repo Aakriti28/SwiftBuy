@@ -1,0 +1,20 @@
+<p>notification works!</p>
+
+<ul>
+    <li *ngFor="let notif of notifs">
+        <!-- {{notifs.notiftext}} ({{notifs.notiftimestamp}} -->
+        <!-- - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a> -->
+<div style="display: flex;">
+  <mat-card class="example-card custom">
+    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+    <mat-card-title-group>
+      <mat-card-title> <a [routerLink]="['/notifications', 2]">Notification</a> </mat-card-title>
+      <mat-card-subtitle>notifs.notiftext</mat-card-subtitle>
+      <!-- <mat-card-subtitle>brand is reqd?</mat-card-subtitle> -->
+      <!-- <mat-card-subtitle>Rs. 50</mat-card-subtitle> -->
+      <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
+    </mat-card-title-group>
+  </mat-card>
+</div>
+</li>
+</ul>

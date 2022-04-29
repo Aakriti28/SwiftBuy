@@ -19,6 +19,6 @@ from django.views.generic.base import TemplateView
 from . import views
 
 urlpatterns = [
-    path('history/', views.history, name='history'),
-    path('addreview/<int:productid>', views.addreview, name='addreview'),
+    path('/history', views.history, name='history'),
+    path('/addreview/<int:productid>', views.addreview, name='addreview'),
 ]
