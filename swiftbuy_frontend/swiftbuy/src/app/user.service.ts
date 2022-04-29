@@ -40,4 +40,8 @@ export class UserService {
     // delete(id: number) {
     //     return this.http.delete(`${config.apiUrl}/users/${id}`);
     // }
+
+    getProfile(){
+        return this.http.get(`http://localhost:8000/about`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+    }
 }

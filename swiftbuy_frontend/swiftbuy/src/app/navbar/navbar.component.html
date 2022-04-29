@@ -71,14 +71,14 @@
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
             <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/home/sellinfo/addproduct']">Add Product</a>
             <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/update']">Update Product</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect href="#">Something else here</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/sell_history']">My Sell History</a>
             <div class="divider dropdown-divider"></div>
             <a class="dropdown-item waves-light" mdbWavesEffect href="#">Separated link</a>
           </div>
         </li>
 
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['notifications']">Notifications</a>
+          <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['/notifications']">Notifications</a>
         </li>
       </ul>
       <!-- Links -->
