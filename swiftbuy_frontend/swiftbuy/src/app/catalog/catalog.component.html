@@ -1,18 +1,18 @@
 <!-- <app-navbar></app-navbar> -->
-<div style="display: flex;">
-<ul>
-  <li *ngFor="let cat in catalog_list.results">
+<div class = "cat-box">
+<!-- <ul> -->
+  <div *ngFor="let cat of catalog_list.results">
   <mat-card class="example-card custom">
     <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
     <mat-card-title-group>
-      <mat-card-title> <a [routerLink]="['/category/{{cat.name}}', 2]">{{cat.name}}</a> </mat-card-title>
+      <mat-card-title> <a [routerLink]="['/category', cat.category_id]">{{cat.name}}</a> </mat-card-title>
       <mat-card-subtitle>category_desc</mat-card-subtitle>
       <!-- <mat-card-subtitle>brand is reqd?</mat-card-subtitle>
       <mat-card-subtitle>Rs. 50</mat-card-subtitle> -->
       <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" >
     </mat-card-title-group>
   </mat-card>
-  </li>
-</ul>
+</div>
+<!-- </ul> -->
 </div>
 

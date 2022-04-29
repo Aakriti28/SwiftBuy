@@ -1,0 +1,33 @@
+,id,name,desc
+0,1,Clothing,"[""Women's Clothing"", ""Kids' Clothing"", ""Men's Clothing"", 'fourgee Clothing', 'piftif Clothing', 'Clovia Clothing', 'Sonpra Clothing']"
+1,2,Furniture,"['Living Room Furniture', 'Living Room', 'Study & Home Office Furniture', 'Kids Room Furniture', 'Storage Furniture', 'Kitchen & Dining Furniture', 'Seating Furniture', 'Pet Furniture', 'ABCD Small Bean Bag  With Foam Filling (Black)', 'Bar Furniture', 'Bedroom Furniture', 'General Utility Furniture', 'Seating', 'Outdoor & Cafeteria Furniture']"
+2,3,Footwear,"[""Women's Footwear"", ""Men's Footwear"", ""Kids' & Infant Footwear"", 'REMSON INDIA Women Flats']"
+3,4,Pet Supplies,"['Grooming', 'Toys', 'Pet Apparel', 'Habitat', 'Storage & Feeding Utensils', 'Food & Health Supplies']"
+4,5,Pens & Stationery,"['School Supplies', 'Diaries & Notebooks', 'Office Supplies', 'College Supplies', 'Art Supplies', 'Pens', 'Office Equipments', 'Calculators']"
+5,6,Sports & Fitness,"['Other Sports', 'Team Sports', 'Fitness Accessories', 'Outdoor & Adventure', 'Racquet Sports', 'Track & Field', 'Indoor Sports & Games']"
+6,7,Beauty and Personal Care,"['Makeup', 'Bath and Spa', 'Hair Care', 'Body and Skin Care', 'Combos and Kits', ""Women's Hygiene"", 'Health Care', 'Fragrances', ""Men's Grooming"", 'Eye Care', 'Beauty Accessories']"
+7,8,"Bags, Wallets & Belts","['Bags', 'Belts', 'Wallets & Clutches', 'Luggage & Travel', 'Suspenders', 'Garment Covers', 'Cufflinks']"
+8,9,Home Decor & Festive Needs,"['Showpiece', 'Table Decor & Handicrafts', 'Candles & Fragrances', 'Showpieces', 'Decorative Lighting & Lamps', 'Wall Decor & Clocks', 'Flowers, Plants & Vases', 'Garden & Leisure', 'TRUE Home Decor & Festive Needs', 'Religion & Devotion', 'Festive Decor']"
+9,10,Automotive,"['Accessories & Spare parts', 'Car & Bike Accessories', 'Car Accessories', 'CEAT 3.00-18 Secura Sport Tube Tyre', 'CEAT 4.00-8 Buland Tube Tyre', 'CEAT 2.75-18 Secura M86 Tube Tyre', 'CEAT 3.50-19 Milaze TT Tube Tyre', 'CEAT 100/90-17 Milaze TT Tube Tyre', 'CEAT 3.50-10 Milaze TT Tube Tyre', 'CEAT 140/70-17 Zoom XL TL Tube Less Tyre', 'CEAT 2.75-17 Secura F85 TL Tube Less Tyre', 'CEAT 2.75-18 Gripp TT Tube Tyre']"
+10,11,Tools & Hardware,['Tools']
+11,12,Home Furnishing,"['Curtains & Accessories', 'Bed Linen', 'Living Room Furnishing', 'Cushions, Pillows & Covers', 'Bath Linen', 'JMD Home Furnishing', ""Kripa's Home Furnishing"", 'Kitchen & Dining Linen', 'Living', 'sovam Home Furnishing', 'Tidy Home Furnishing', 'Floor Coverings']"
+12,13,Baby Care,"['Baby Bath & Skin', 'Infant Wear', 'Feeding & Nursing', 'Baby Bedding', 'Furniture & Furnishings', 'Baby Grooming', 'Diapering & Potty Training', 'Strollers & Activity Gear', 'Health & Safety', 'Baby & Kids Gifts']"
+13,14,Mobiles & Accessories,"['Mobile Accessories', 'Tablet Accessories']"
+14,15,Food & Nutrition,['Health & Nutrition']
+15,16,Watches,"['Wrist Watches', 'Watch Accessories', 'Clocks']"
+16,17,Toys & School Supplies,"['Musical Instruments & Toys', 'Puzzles & Board Games', 'Dupli Color Toys & School Supplies', 'School Supplies', 'Soft Toys', 'C Kreul Toys & School Supplies', 'Party Supplies', 'Outdoor Toys', 'Role Play Toys', 'Magic Kits', 'Cars, Trains & Bikes', 'Naaz Toys & School Supplies', 'Learning & Educational Toys', 'Remote Control Toys', 'Ride Ons', 'Toy Guns & Weapons', 'Educational Toys', 'Wind Spinner Toys', 'Action Figures']"
+17,18,Jewellery,"['Bangles, Bracelets & Armlets', 'Rings', 'Pendants & Lockets', 'Necklaces & Chains', 'Mangalsutras & Tanmaniyas', 'Jewellery Sets', 'Accessories', 'Anklets', 'Earrings', 'Hair Accessories', 'Artificial Jewellery', 'Dilan Jewels Alloy Zircon 18K Yellow Gold Bangle...', 'Precious Jewellery', 'Nose Rings & Studs']"
+18,19,Kitchen & Dining,"['Tableware & Cutlery', 'Lighting', 'Coffee Mugs', 'Cookware', 'Containers & Bottles', 'Consumables & Disposables', 'Dinnerware & Crockery', 'Housekeeping & Laundry', 'Bakeware', 'Kitchen Tools', 'Bar & Glassware', 'Pressure Cookers & Pans', 'Palakz Kitchen & Dining', 'Flasks & Casseroles', 'Home Utilities']"
+19,20,Home & Kitchen,"['Kitchen Appliances', 'Home Appliances']"
+20,21,Computers,"['Network Components', 'Tablet Accessories', 'Laptop Accessories', 'Software', 'Audio Players', 'Computer Peripherals', 'Storage', 'Computer Components', 'Laptops']"
+21,22,Health & Personal Care Appliances,"['Health Care', 'Personal Care Appliances']"
+22,23,Gaming,"['Gaming Accessories', 'Gaming Components']"
+23,24,Home Improvement,"['Tools', 'Electricals', 'Hardware', 'Sanitaryware', 'Lawn & Gardening', 'SAY RO Membrane Housing Set Solid Filter Cartrid...', 'Home Storage & Organization']"
+24,25,Automation & Robotics,['Smart Door Locks']
+25,26,Cameras & Accessories,['Camera Accessories']
+26,27,Sunglasses,"['Dark Image Wayfarer Sunglasses', 'AAO+ Aviator Sunglasses', 'EYE GLASS Wayfarer Sunglasses', 'HERDY Aviator Sunglasses', 'Zyaden Oval Sunglasses', 'Elligator Aviator Sunglasses', 'Silver Kartz Beach Sky Blue Wayfarer, Rectangula...', 'Pepe Jeans Wayfarer Sunglasses', 'Mikado Aviator Sunglasses', 'Damemoda Wayfarer Sunglasses', 'HH Oval Sunglasses', 'Look-Kool Unisex Wayfarer Sunglasses', 'HH Wayfarer Sunglasses', 'Aligatorr Aviator Sunglasses', 'HH Aviator Sunglasses', 'Olvin Wayfarer Sunglasses', 'Olvin Oval Sunglasses', 'Olvin Aviator Sunglasses', 'VESPL Wayfarer Sunglasses', 'Raees Wayfarer Sunglasses', 'Redex Cat-eye Sunglasses', 'barbarik Wayfarer, Aviator Sunglasses']"
+27,28,Home Entertainment,"['Audio Players', 'Home Audio', 'Video Players & Accessories', 'MP3 players/Ipods Accessories']"
+28,29,Wearable Smart Devices,['Wearable Accessories']
+29,30,Eyewear,['Frames']
+30,31,eBooks,"['Academic Texts', 'Religion & Spirituality', 'Science']"
+31,32,Household Supplies,['Home Cleaning']

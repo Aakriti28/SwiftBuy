@@ -11,3 +11,7 @@
   width:230pt;
   float: inline-start;
 }  
+.cat-box{
+  display: flex; 
+  flex-wrap: wrap;
+}

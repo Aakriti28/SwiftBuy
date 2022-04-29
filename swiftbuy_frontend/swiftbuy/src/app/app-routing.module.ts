@@ -16,6 +16,7 @@ import { SellHistoryComponent } from './sell-history/sell-history.component';
 import { ProfileComponent } from './profile/profile.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { UpdateProfileComponent } from './update-profile/update-profile.component';
+import { ProductComponent } from './product/product.component';
 
 const routes: Routes = [
   {path:'home', component:HomePageComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path:'home/sellinfo', component:SellinfoComponent},
   {path:'update', component:UpdateProductComponent},
   {path:'update/:product_id', component:SellinfoUpdateProductComponent},
+  {path:'product/:product_id', component:ProductComponent},
   // {path:'home/catalog', component:CatalogComponent},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
@@ -36,6 +38,7 @@ const routes: Routes = [
   {path: 'order', component: OrderComponent},
   {path: 'wallet', component: WalletComponent},
   {path: 'profile/update', component:UpdateProfileComponent},
+  {path: 'category/:category_id', component:CatalogProductsComponent}
 ];
 
 // redirect '' to sign up page if user is logged in or to home page if not logged in

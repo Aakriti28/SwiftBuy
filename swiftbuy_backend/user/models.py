@@ -160,7 +160,8 @@ class Category(models.Model):
 
 
 class Incart(models.Model):
-    buyer = models.OneToOneField('Users', models.DO_NOTHING, primary_key=True)
+    id = models.IntegerField(primary_key=True)
+    buyer = models.OneToOneField('Users', models.DO_NOTHING)
     product = models.ForeignKey('Product', models.DO_NOTHING)
     quantity = models.IntegerField(blank=True, null=True)
 
@@ -243,7 +244,8 @@ class Review(models.Model):
 
 
 class Transaction(models.Model):
-    seller = models.OneToOneField('Users', models.DO_NOTHING, primary_key=True)
+    id = models.IntegerField(primary_key=True)
+    seller = models.OneToOneField('Users', models.DO_NOTHING)
     buyer = models.ForeignKey('Users', models.DO_NOTHING, related_name='+')
     product = models.ForeignKey(Product, models.DO_NOTHING)
     order = models.ForeignKey(Orders, models.DO_NOTHING)
