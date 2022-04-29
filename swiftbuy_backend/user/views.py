@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .forms import RegisterUserForm
 from .models import Users, Paymentgateway
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+
 import sys
 import json
 import random
@@ -37,16 +38,29 @@ def signup(request):
 	print(form.errors)
 	return JsonResponse({'status': 'Unsuccessful registration. Invalid information.'})
 
-def login(request):
+@csrf_exempt
+def mylogin(request):
 	user_info = json.loads(request.body.decode('utf8').replace("'", '"'))
 	user = authenticate(request, username=user_info['email'], password=user_info['password'])
 	if user is not None:
 		login(request, user)
-		return JsonResponse({'status': 'Login successful.'})
-	return JsonResponse({'status': 'Login unsuccessful.'})
+		return JsonResponse({'status': 'success'})
+	else:
+		if Users.objects.filter(email=user_info['email'], password=user_info['password']).exists():
+			user = Users.objects.get(email=user_info['email'], password=user_info['password'])
+			login(request, user)
+			request.session['user_id'] = user.uid
+			request.session.modified = True
+			return JsonResponse({'status': 'success'})
+	return JsonResponse({'status': 'failure'})
 
-@login_required
-def logout(request):
+@csrf_exempt
+def mylogout(request):
 	logout(request)
+	try:
+		del request.session['user_id']
+		request.session.flush()
+	except KeyError:
+		pass
 	return JsonResponse({'status': 'Logout successful.'})
 

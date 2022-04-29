@@ -28,6 +28,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { AuthService } from './auth.service';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AuthService } from './auth.service';
     SellinfoComponent,
     SellinfoUpdateProductComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

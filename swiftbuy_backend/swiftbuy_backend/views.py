@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from user.models import Users, Product, Transaction, Orders, Addmoney, Incart, Notification, Wishlist
 from .forms import AddMoneyForm
 from django.contrib.auth.decorators import login_required
-
+import sys
 # Create your views here.
 
 @login_required
@@ -114,10 +114,16 @@ def order(request):
 	
 	return JsonResponse({'status': 'Order placed successfully.'})
 
-@login_required
 def notifications(request):
-	notifications = Notification.objects.filter(user_id=request.user.uid).order_by('-timestamp')
-	return JsonResponse({'notifications': notifications})
+	if request.session.get('uid') is not None or request.user.is_authenticated:
+		uid = request.session.get('uid')
+		if uid is None:
+			uid = request.user.uid
+		notifications = Notification.objects.filter(user_id=uid).order_by('-timestamp')
+		return JsonResponse({'notifications': notifications})
+	else :
+		print("Not authenticated", file=sys.stderr)
+		return JsonResponse({'status': 'Not authenticated.'})
 
 	
 

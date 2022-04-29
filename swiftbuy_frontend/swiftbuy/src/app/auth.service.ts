@@ -22,6 +22,6 @@ export class AuthService {
   }
 
   logoutUser(): Observable<any>{
-    return this.http.get(this._logoutUrl);
+    return this.http.post(this._logoutUrl, {});
   }
 }

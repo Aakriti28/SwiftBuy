@@ -21,7 +21,7 @@ from user import views as user_views
 
 urlpatterns = [
     path('', views.categories, name='categories'),
-    path('<int:categoryid>/', views.products, name='products'),
-    path('products/<int:productid>', views.viewproduct, name='viewproduct'),
-    path('search/', views.search, name='search'),
+    path('/<int:categoryid>', views.products, name='products'),
+    path('/products/<int:productid>', views.viewproduct, name='viewproduct'),
+    path('/search', views.search, name='search'),
 ]
