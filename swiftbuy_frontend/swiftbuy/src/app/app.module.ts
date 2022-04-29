@@ -33,6 +33,7 @@ import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { ProfileComponent } from './profile/profile.component';
+import { WalletComponent } from './wallet/wallet.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ProfileComponent } from './profile/profile.component';
     CartComponent,
     OrderComponent,
     UpdateProductComponent,
-    ProfileComponent
+    ProfileComponent,
+    WalletComponent
   ],
   imports: [
     BrowserModule,

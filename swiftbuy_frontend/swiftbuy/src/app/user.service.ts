@@ -44,4 +44,12 @@ export class UserService {
     getProfile(){
         return this.http.get(`http://localhost:8000/about`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
+
+    getWalletHistory(){
+        return this.http.get(`http://localhost:8000/wallet`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });        
+    }
+
+    addMoneyToWallet(){
+        return this.http.post(`http://localhost:8000/about`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+    }
 }

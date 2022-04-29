@@ -18,8 +18,8 @@ def home(request):
 def about(request):
 	if request.user.is_authenticated:
 		if request.method == 'GET':
-			details = Users.objects.get(id=request.user.uid)
-			return JsonResponse({'status': 'success', 'results': list(details.values())}, status=HTTPStatus.OK)
+			details = Users.objects.get(uid=request.user.uid)
+			return JsonResponse({'status': 'success', 'results': details.__dict__}, status=HTTPStatus.OK)
 		elif request.method == 'POST':
 			params = {
 				'name': request.POST['name'],
@@ -28,7 +28,7 @@ def about(request):
 				'address': request.POST['address'],
 				'shipping_address': request.POST['shipping_address']
 			}
-			Users.objects.filter(id=request.user.uid).update(**params)
+			Users.objects.filter(uid=request.user.uid).update(**params)
 			return JsonResponse({'status': 'success', 'results': 'Profile updated'}, status=HTTPStatus.OK)
 	else:
 		return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
