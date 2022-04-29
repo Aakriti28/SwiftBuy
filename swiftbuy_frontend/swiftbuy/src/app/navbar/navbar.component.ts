@@ -8,7 +8,7 @@ import { AuthService } from '../auth.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private _auth: AuthService) { }
+  constructor(public _auth: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -16,8 +16,14 @@ export class NavbarComponent implements OnInit {
     console.log("Logging out user");
     this._auth.logoutUser()
     .subscribe(
-      (      res: any) => console.log(res),
-      err => console.log(err)
+      (      res: any) =>{ 
+        console.log(res);
+        this._auth._isLoggedIn = true;
+      },
+      err => {
+        console.log(err);
+        this._auth._isLoggedIn = false;
+      }
     )
   }
 }

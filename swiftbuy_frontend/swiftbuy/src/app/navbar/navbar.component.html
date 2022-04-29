@@ -1,8 +1,38 @@
 <!--Navbar-->
-<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
+<div *ngIf="!_auth._isLoggedIn">
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
 
     <!-- Navbar brand -->
-    <mdb-navbar-brand><a class="navbar-brand" href="/home/1/">SwiftBuy</a></mdb-navbar-brand>
+    <mdb-navbar-brand><a class="navbar-brand" href="/home">SwiftBuy</a></mdb-navbar-brand>
+  
+    <!-- Collapsible content -->
+    <links>
+  
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link waves-light" mdbWavesEffect href="/login/" [routerLink]="['login']">Login</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link waves-light" mdbWavesEffect href="/register/" [routerLink]="['register']">Register</a>
+        </li>
+
+       
+      </ul>
+    </links>
+      <!-- Links -->
+  
+  </mdb-navbar>
+  <!--/.Navbar-->
+
+  <router-outlet></router-outlet> 
+</div>
+
+<div *ngIf="_auth._isLoggedIn">
+  <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
+
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand" href="/home/">SwiftBuy</a></mdb-navbar-brand>
   
     <!-- Collapsible content -->
     <links>
@@ -17,13 +47,7 @@
           <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['profile']">My Profile</a>
         </li>
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link waves-light" mdbWavesEffect href="/login/" [routerLink]="['login']">Login</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link waves-light" mdbWavesEffect href="/register/" [routerLink]="['register']">Register</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a (click)="logoutUser()" class="nav-link waves-light" mdbWavesEffect href="/login/" [routerLink]="['login']">Logout</a>
+          <a (click)="logoutUser()" class="nav-link waves-light" mdbWavesEffect href="/home/" [routerLink]="['home']">Logout</a>
         </li>
   
         <!-- Dropdown -->
@@ -68,3 +92,4 @@
   <!--/.Navbar-->
 
   <router-outlet></router-outlet> 
+</div>
