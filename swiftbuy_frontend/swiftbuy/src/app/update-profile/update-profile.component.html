@@ -1,0 +1,47 @@
+<div *ngIf="this.received_data" style="background-color: lightblue; padding-top: 30pt;padding-bottom: 30pt;">
+    <form action="" class="form" #myForm="ngForm">
+        <p style="margin-left: 30%;">
+            <mat-form-field appearance="fill">
+              <mat-label>Name</mat-label>
+              <input matInput [ngModel]="registerUserData.name">
+            </mat-form-field>
+          </p>
+          <p style="margin-left: 30%;">
+              <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput [ngModel]="registerUserData.email" name="email">
+              </mat-form-field>
+            </p>
+            <!-- <p style="margin-left: 30%;">
+                <mat-form-field appearance="fill">
+                  <mat-label>Product Name</mat-label>
+                  <input matInput [ngModel]="product.name">
+                </mat-form-field>
+              </p>
+       -->
+          <p style="margin-left: 30%;">
+            <mat-form-field appearance="fill">
+                <mat-label>Address</mat-label>
+                <textarea matInput cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="7" [ngModel]="registerUserData.address" name="address"></textarea>
+            </mat-form-field>
+          </p>
+          <p style="margin-left: 30%;">
+              <mat-form-field appearance="fill">
+                  <mat-label>Shipping Address</mat-label>
+                  <textarea matInput cdkTextareaAutosize
+                  #autosize="cdkTextareaAutosize"
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="7" [ngModel]="registerUserData.shipaddress" name="shipaddress"></textarea>
+              </mat-form-field>
+            </p>
+          
+          <p style="margin-left: 30%;">
+            <button mat-raised-button color="accent" [disabled]="!myForm.form.valid">Update</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </p>
+    </form>
+    
+    
+</div>

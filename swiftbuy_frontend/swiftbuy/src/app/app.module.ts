@@ -34,6 +34,7 @@ import { OrderComponent } from './order/order.component';
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { ProfileComponent } from './profile/profile.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { UpdateProfileComponent } from './update-profile/update-profile.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { WalletComponent } from './wallet/wallet.component';
     OrderComponent,
     UpdateProductComponent,
     ProfileComponent,
-    WalletComponent
+    WalletComponent,
+    UpdateProfileComponent
   ],
   imports: [
     BrowserModule,

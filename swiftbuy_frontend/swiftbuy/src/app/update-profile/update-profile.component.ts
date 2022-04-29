@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
 import { Registration_info } from '../registration_details';
-
+import { UserService } from '../user.service';
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  selector: 'app-update-profile',
+  templateUrl: './update-profile.component.html',
+  styleUrls: ['./update-profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+
+export class UpdateProfileComponent implements OnInit {
   my_profile: any = {};
-  registerUserData:Registration_info = {
-    name: '',
+  registerUserData = {
+    name: 'asdads',
     email: '',
     role: '',
     address: '',
@@ -20,27 +20,21 @@ export class ProfileComponent implements OnInit {
     cpassword: '',
     shipaddress: ''
   };
-  public showUpdateForm = false;
+  received_data = false;
   constructor(private service: UserService) { }
 
   ngOnInit(): void {
     this.getMyProfileFromAPI()
+    // this.registerUserData = 
   }
-  
+
   getMyProfileFromAPI(){
     this.service.getProfile().subscribe(
       response => {
         this.my_profile = response;
         console.log(this.my_profile)
-      },
-      error => {
-        console.log("error in get_my_profile : ",error)
-      }
-    )
-  }
-
-  updateProfile(){
-    this.registerUserData.address = this.my_profile.address;
+        this.received_data=true;
+        this.registerUserData.address = this.my_profile.address;
     this.registerUserData.password = this.my_profile.password;
     this.registerUserData.cpassword = this.my_profile.cpassword;
     this.registerUserData.shipaddress = this.my_profile.shipaddress;
@@ -49,8 +43,17 @@ export class ProfileComponent implements OnInit {
     this.registerUserData.phone = this.my_profile.phone;
     this.registerUserData.email = this.my_profile.email;
     this.registerUserData.name = this.my_profile.name;
+      },
+      error => {
+        console.log("error in get_my_profile : ",error)
+      }
+    )
+  }
 
-    this.service.updateProfile(this.my_profile).subscribe(
+  updateProfile(){
+    
+
+    this.service.updateProfile(this.registerUserData).subscribe(
       response => {
         console.log("registered new user. response = ",response);
         // this.router.navigate(['/login']);
