@@ -44,6 +44,7 @@ def about(request):
 	else:
 		return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
+@csrf_exempt
 def wallet(request):
 	if request.user.is_authenticated:
 		orders_list = list(Orders.objects.filter(user_id=request.user.uid).all().values_list('order_id', flat=True))

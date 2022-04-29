@@ -25,7 +25,7 @@ urlpatterns = [
 
     path('home', views.home, name='home'),
     path('about/', views.about, name='about'),
-    path('wallet/', views.wallet, name='wallet'),
+    path('wallet', views.wallet, name='wallet'),
     path('addmoney', views.addmoney, name='addmoney'),
     path('cart', views.cart, name='cart'),
     path('wishlist', views.wishlist, name='wishlist'),

@@ -58,7 +58,7 @@ export class UserService {
     }
 
     getWalletHistory(){
-        return this.http.get(`http://localhost:8000/wallet`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });        
+        return this.http.post(`http://localhost:8000/wallet`, {},{ headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });        
     }
 
     addMoneyToWallet(){
