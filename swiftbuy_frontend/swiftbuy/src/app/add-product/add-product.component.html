@@ -21,9 +21,13 @@ description -->
       <mat-form-field appearance="fill">
           <mat-label color="accent">Category</mat-label>
       <!-- Use ngFor here after ftching all categories from backend -->
-      <mat-select name="category" [(ngModel)]="product.category">
-        <mat-option value="one">First option</mat-option>
-        <mat-option value="two">Second option</mat-option>
+      <!-- <mat-select name="category" [(ngModel)]="product.category" >
+        <li *ngFor="let cat of this.catalog_list">
+          <mat-option  value="cat.category_id">{{cat.name}</mat-option>
+        </li>
+      </mat-select> -->
+      <mat-select placeholder="Select Category" name="category"  [(ngModel)]="product.category" >
+        <mat-option *ngFor="let cat of catalog_list" [value]="cat.category_id" >{{ cat.name }}</mat-option>
       </mat-select>
           <!-- <mat-hint>Positive Number</mat-hint> -->
       </mat-form-field>
@@ -80,11 +84,11 @@ description -->
       <br>
       <mat-radio-group aria-label="Select an option" name="advertised" [(ngModel)]="product.advertised">
         <mat-radio-button value="1">Yes</mat-radio-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <mat-radio-button value="2">No</mat-radio-button>
+        <mat-radio-button value="0">No</mat-radio-button>
       </mat-radio-group>
     </p>
     <p style="margin-left: 30%;">
-      <button mat-raised-button color="accent" type="submit" class="btn btn-success" [disabled]="!userForm.form.valid">Add Product</button>
+      <button (click)="addProduct()" mat-raised-button color="accent" type="submit" class="btn btn-success" [disabled]="!userForm.form.valid">Add Product</button>
       <!-- <button type="button" class="btn btn-default" (click)="newProduct(); userForm.reset()">Add New Venue</button> -->
     </p>
 

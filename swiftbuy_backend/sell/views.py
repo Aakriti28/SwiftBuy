@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from http import HTTPStatus
 from django.http import JsonResponse
-from user.models import Product, Transaction, Wishlist, Notification
+from user.models import Product, Transaction, Wishlist, Notification, Brand, Category, Users
 import datetime
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+import json
+import numpy as np
 
 # Create your views here.
 
@@ -16,23 +19,45 @@ def sellinfo(request):
     else:
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
+@csrf_exempt
 def addproduct(request):
     if request.user.is_authenticated:
+        info = json.loads(request.body.decode('utf-8').replace("'", '"'))
+        print(info)
+
         params = {
-            'category': request.POST['category'],
-            'brand': request.POST['brand'],
-            'name': request.POST['name'],
-            'price': request.POST['price'],
-            'quantity_available': request.POST['quantity_available'],
-            'discount': request.POST['discount'],
-            'product_desc': request.POST['product_desc'],
-            'seller': request.user
+            'category': Category.objects.filter(category_id=info['category'])[0],
+            'brand': info['brand'],
+            'name': info['name'],
+            'price': info['price'],
+            'quantity_available': info['quantity'],
+            'discount': info['discount'],
+            'product_desc': info['productDesc'],
+            'seller_id': request.user.uid,
+            'images': info['image'],
+            'advertised': info['advertised']
         }
-        product = Product.objects.create(**params)
+        brandid = Brand.objects.filter(name=info['brand']).values('brand_id')
+        if not brandid:
+            Brand.objects.create(name=info['brand'])
+            brandid = Brand.objects.filter(name=info['brand']).values('brand_id')[0]['brand_id']
+        else:
+            brandid = brandid[0]['brand_id']
+        
+        params['brand'] = Brand.objects.filter(brand_id=brandid)[0]
+        # product = Product.objects.create(**{
+        #     'category': params['category'], 'brand' : params['brand'],
+        #     'name' : params['name'], 'price' : params['price'],
+        #     'quantity_available' : params['quantity_available'],'discount' : params['discount'],
+        #     'product_desc' : params['product_desc'],'seller' : params['seller'], 
+        #     'images' : params['images'],'advertised' : params['advertised']
+        #     })
+       
+        max_id = np.random.randint(25000, 100000)
+        product = Product.objects.create(product_id=max_id, images=params['images'], category=params['category'], brand=params['brand'], name=info['name'], price=info['price'], quantity_available=info['quantity'], discount=info['discount'], product_desc=info['productDesc'], advertised=params['advertised'], seller_id=params['seller_id'])
         return JsonResponse({'results': product.product_id, 'status': 'success'}, status=HTTPStatus.OK)
     else:
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
-
 def update(request, productid):
     if request.user.is_authenticated:
         userid = request.user.uid
