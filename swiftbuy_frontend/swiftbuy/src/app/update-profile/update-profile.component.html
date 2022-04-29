@@ -3,20 +3,20 @@
         <p style="margin-left: 30%;">
             <mat-form-field appearance="fill">
               <mat-label>Name</mat-label>
-              <input matInput [ngModel]="registerUserData.name" name="name" required>
+              <input matInput [(ngModel)]="registerUserData.name" name="name" required>
             </mat-form-field>
           </p>
           <p style="margin-left: 30%;">
               <mat-form-field appearance="fill">
                 <mat-label>Email</mat-label>
-                <input matInput [ngModel]="registerUserData.email" name="email" required>
+                <input matInput [(ngModel)]="registerUserData.email" name="email" required>
               </mat-form-field>
             </p>
 
              <p style="margin-left: 30%;">
                 <mat-form-field appearance="fill">
                   <mat-label>Phone</mat-label>
-                  <input matInput [ngModel]="registerUserData.phone" name="phone" required>
+                  <input matInput [(ngModel)]="registerUserData.phone" name="phone" required>
                 </mat-form-field>
               </p>
             <!--<p style="margin-left: 30%;">
@@ -47,7 +47,7 @@
                 <textarea matInput cdkTextareaAutosize
                 #autosize="cdkTextareaAutosize"
                 cdkAutosizeMinRows="1"
-                cdkAutosizeMaxRows="7" [ngModel]="registerUserData.address" name="address" required></textarea>
+                cdkAutosizeMaxRows="7" [(ngModel)]="registerUserData.address" name="address" required></textarea>
             </mat-form-field>
           </p>
           <p style="margin-left: 30%;">
@@ -56,12 +56,12 @@
                   <textarea matInput cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize"
                   cdkAutosizeMinRows="1"
-                  cdkAutosizeMaxRows="7" [ngModel]="registerUserData.shipaddress" name="shipaddress"></textarea>
+                  cdkAutosizeMaxRows="7" [(ngModel)]="registerUserData.shipaddress" name="shipaddress"></textarea>
               </mat-form-field>
             </p>
           
           <p style="margin-left: 30%;">
-            <button (click)="updateUserInfo()" mat-raised-button color="accent" [disabled]="!myForm.form.valid">Update</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" (click)="updateUserInfo()" mat-raised-button color="accent" [disabled]="!myForm.form.valid" [routerLink]="['/profile']">Update</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </p>
     </form>
     

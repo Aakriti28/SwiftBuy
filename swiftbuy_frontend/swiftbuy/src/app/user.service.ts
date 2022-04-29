@@ -53,7 +53,8 @@ export class UserService {
     }
 
     updateProfile(user:Registration_info){
-        return this.http.post(`http://localhost:8000/about`, user, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+        console.log(user)
+        return this.http.post(`http://localhost:8000/about`, {user}, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
 
     getWalletHistory(){

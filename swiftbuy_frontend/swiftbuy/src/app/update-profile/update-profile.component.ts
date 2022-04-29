@@ -37,13 +37,16 @@ export class UpdateProfileComponent implements OnInit {
         this.registerUserData.address = this.my_profile.address;
         this.registerUserData.password = this.my_profile.password;
         this.registerUserData.cpassword = this.my_profile.password;
-        this.registerUserData.shipaddress = this.my_profile.shipaddress;
+        if(this.my_profile.shipaddress){
+          this.registerUserData.shipaddress = this.my_profile.shipaddress;
+        }
+        
         this.registerUserData.role = this.my_profile.role;
         this.registerUserData.referralToken = this.my_profile.referralToken;
         this.registerUserData.phone = this.my_profile.phone;
         this.registerUserData.email = this.my_profile.email;
         this.registerUserData.name = this.my_profile.name;
-        
+        this.received_data = true;
       },
       error => {
         console.log("error in get_my_profile : ",error)
@@ -54,6 +57,7 @@ export class UpdateProfileComponent implements OnInit {
   updateUserInfo(){
     this.service.updateProfile(this.registerUserData).subscribe(
       response => {
+        // console.log()
         console.log("registered new user. response = ",response);
         // this.router.navigate(['/login']);
       },
