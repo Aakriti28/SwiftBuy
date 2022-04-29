@@ -2,10 +2,10 @@ from http import HTTPStatus
 from django.shortcuts import render
 from django.http import JsonResponse
 from user.models import Category, Product
-
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
-
+@csrf_exempt
 def categories(request):
     if request.user.is_authenticated:
         categories = Category.objects.all()

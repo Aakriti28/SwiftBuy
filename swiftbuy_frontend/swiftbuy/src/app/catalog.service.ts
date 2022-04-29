@@ -11,6 +11,6 @@ export class CatalogService {
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   getCatalog(): Observable<any>{
-    return this.http.get(this._catalogUrl, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+    return this.http.get(this._catalogUrl,{ headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
   }
 }

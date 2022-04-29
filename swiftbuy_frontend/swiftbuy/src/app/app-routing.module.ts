@@ -10,16 +10,17 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { NotificationComponent } from './notification/notification.component';
 import { CartComponent } from './cart/cart.component';
-
+import { UpdateProductComponent } from './update-product/update-product.component';
 
 const routes: Routes = [
-  {path:'home/', component:HomePageComponent},
+  {path:'home', component:HomePageComponent},
   {path:'', redirectTo:'/login',pathMatch:'full'},
   {path:'home/catalog/:category_name', component:CatalogProductsComponent},
   {path:'home/sellinfo/addproduct', component:AddProductComponent},
   {path:'home/sellinfo', component:SellinfoComponent},
-  {path:'home/update/:product_id', component:SellinfoUpdateProductComponent},
-  {path:'home/catalog', component:CatalogComponent},
+  {path:'update', component:UpdateProductComponent},
+  {path:'update/:product_id', component:SellinfoUpdateProductComponent},
+  // {path:'home/catalog', component:CatalogComponent},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
   {path: 'catalog', component: CatalogComponent},

@@ -20,13 +20,14 @@ export class NavbarComponent implements OnInit {
       (      res: any) =>{ 
         console.log(res);
         this._auth._isLoggedIn = false;
-        this.router.navigate(['/login'])
+        this.router.navigate(['/login']);
+        console.log("logged out ", this._auth._isLoggedIn);
       },
       err => {
         console.log(err);
         this._auth._isLoggedIn = true;
+        console.log("error logging out ",this._auth._isLoggedIn);
       }
     )
-    console.log("logged out and ", this._auth._isLoggedIn );
   }
 }
