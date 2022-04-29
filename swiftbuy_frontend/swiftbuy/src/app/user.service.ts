@@ -9,7 +9,7 @@ export class UserService {
 
     getNotifications(): Observable<any> {
         console.log('getNotifications');
-        return this.http.get(`http://127.0.0.1:8000/notifications`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+        return this.http.get(`http://localhost:8000/notifications`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
 
     // getProduct(productid: number) {
@@ -20,11 +20,11 @@ export class UserService {
 
     getCart(): Observable<any> {
         console.log('getCart');
-        return this.http.get(`http://127.0.0.1:8000/cart`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+        return this.http.get(`http://localhost:8000/cart`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
 
     placeOrder(paymentid: number): Observable<any> {
-        return this.http.post(`http://127.0.0.1:8000/order`, (paymentid), { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
+        return this.http.post(`http://localhost:8000/order`, (paymentid), { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
 
     // register(user: User) {
