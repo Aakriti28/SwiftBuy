@@ -8,7 +8,9 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def categories(request):
+    print("Hi i am here")
     categories = Category.objects.all()
+    print("are categries ",categories)
     return JsonResponse({'results': categories})
 
 @login_required
