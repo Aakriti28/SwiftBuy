@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 // import { User } from '../user';
 import {Notification} from './notification';
@@ -8,12 +9,17 @@ import {Notification} from './notification';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private cookieService: CookieService) { }
 
     getNotifications() {
         console.log('getNotifications');
+        // let headers = new Headers({
+        //     'Content-Type': 'application/json',
+        //     'X-CSRFToken': this.getCookie('csrftoken')
+        // });
+        // let options = new RequestOptions({ headers: headers, withCredentials: true });
         // return this.http.get('http://localhost:8080/api/users/' + userid + '/notifications');
-        return this.http.get<Notification[]>(`http://localhost:8000/notifications`);
+        return this.http.get<Notification[]>(`http://localhost:8000/notifications`, { headers: { 'Content-Type': 'application/json','X-CSRFToken': this.cookieService.get('csrftoken')  }, withCredentials: true });
     }
 
     // getcatalog() {
