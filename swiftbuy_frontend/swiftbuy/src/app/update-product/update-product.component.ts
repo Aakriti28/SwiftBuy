@@ -14,6 +14,7 @@ export class UpdateProductComponent implements OnInit {
     this.getProducts();
   }
 
+  
   getProducts(){
     this.service.getSellerProduct().subscribe(
       response => {

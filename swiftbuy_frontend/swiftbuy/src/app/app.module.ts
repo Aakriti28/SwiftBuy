@@ -40,6 +40,7 @@ import { ProductComponent } from './product/product.component';
 import {MatTableModule} from '@angular/material/table';
 import { AddmoneyComponent } from './addmoney/addmoney.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { ProductUpdateFormComponent } from './product-update-form/product-update-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +64,8 @@ import { SearchResultComponent } from './search-result/search-result.component';
     UpdateProfileComponent,
     ProductComponent,
     AddmoneyComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    ProductUpdateFormComponent
   ],
   imports: [
     BrowserModule,
