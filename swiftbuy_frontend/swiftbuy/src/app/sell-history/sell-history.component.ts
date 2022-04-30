@@ -7,7 +7,7 @@ import { SellerService } from '../seller.service';
   styleUrls: ['./sell-history.component.scss']
 })
 export class SellHistoryComponent implements OnInit {
-  sell_history_list: any = {};
+  sell_history_list: any = [];
   constructor(private service: SellerService) { }
 
   ngOnInit(): void {
@@ -18,6 +18,7 @@ export class SellHistoryComponent implements OnInit {
     this.service.getSellHistory().subscribe(
       response => {
         this.sell_history_list = response;
+        this.sell_history_list = this.sell_history_list.results;
         console.log(this.sell_history_list)
       },
       error => {

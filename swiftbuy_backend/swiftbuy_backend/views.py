@@ -4,7 +4,7 @@ import json
 from django.shortcuts import render, redirect
 from http import HTTPStatus
 from django.http import JsonResponse
-from user.models import Users, Product, Transaction, Orders, Addmoney, Incart, Notification, Wishlist
+from user.models import Users, Product, Transaction, Orders, Addmoney, Incart, Notification, Wishlist, Paymentgateway
 from .forms import AddMoneyForm
 from django.contrib.auth.decorators import login_required
 import sys
@@ -18,8 +18,10 @@ import numpy as np
 
 def home(request):
 	if request.user.is_authenticated:
-		advertised_products = Product.objects.filter(is_advertised=True)
-		return JsonResponse({'status': 'success', 'results': list(advertised_products.values())}, status=HTTPStatus.OK)
+		advertised_products = Product.objects.filter(advertised=1).values()
+		for p in advertised_products :
+			p['images'] = p['images'][1:-1].replace('\\', '').split(',')[0].strip('"').strip('\\').strip('"')
+		return JsonResponse({'status': 'success', 'results': list(advertised_products)[:100]}, status=HTTPStatus.OK)
 	else:
 		return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
@@ -48,32 +50,36 @@ def about(request):
 @csrf_exempt
 def wallet(request):
 	if request.user.is_authenticated:
-		orders_list = list(Orders.objects.filter(user_id=request.user.uid).all().values_list('order_id', flat=True))
-		buy_txns = Product.objects.filter(transaction__order_id__in=orders_list).annotate(amount=F('discount')*F('transaction__quantity')).annotate(type=Value("B", CharField())).values_list('type', 'amount')
-		buy_ts = Orders.objects.filter(user_id=request.user.uid, order_id__in=orders_list).values_list('trasaction_time')
+		orders_list = list(Transaction.objects.filter(buyer_id=request.user.uid).all().values_list('order_id', flat=True))
+		buy_txns = Product.objects.filter(transaction__order_id__in=orders_list).annotate(amount=F('discount')*F('transaction__quantity')).annotate(type=Value("Debited: Bought An Item", CharField())).values_list('type', 'amount')
+		buy_ts = Orders.objects.filter(order_id__in=orders_list).values_list('trasaction_time')
 		buy_txns = [list((zipped[0][0], zipped[0][1], zipped[1][0])) for zipped in zip(buy_txns, buy_ts)]
-		sell_txns = Product.objects.filter(transaction__seller_id=request.user.uid).annotate(amount=F('discount')*F('transaction__quantity')).annotate(type=Value("S", CharField())).values_list('type', 'amount')
-		sell_ts = Orders.objects.filter(order_id__in=orders_list, transaction__seller_id=request.user.uid).values_list('trasaction_time')
+		sell_txns = Product.objects.filter(transaction__seller_id=request.user.uid).annotate(amount=F('discount')*F('transaction__quantity')).annotate(type=Value("Credited: Sold An Item", CharField())).values_list('type', 'amount')
+		sell_ts = Orders.objects.filter(order_id__in=orders_list).values_list('trasaction_time')
 		sell_txns = [list((zipped[0][0], zipped[0][1], zipped[1][0])) for zipped in zip(sell_txns, sell_ts)]
-		add_txns = Addmoney.objects.filter(user_id=request.user.uid).annotate(type=Value("A", CharField())).values_list('type', 'amount', 'timestamp')
+		add_txns = Addmoney.objects.filter(user_id=request.user.uid).annotate(type=Value("Added Money to Wallet", CharField())).values_list('type', 'amount', 'timestamp')
 		txns = list(chain(buy_txns, sell_txns, add_txns))
 		txns.sort(key=lambda x: x[2], reverse=True)
-		return JsonResponse({'status': 'success', 'results': txns}, status=HTTPStatus.OK)
+		wallet_amount = Users.objects.filter(uid=request.user.uid).values('wallet_amount')[0]['wallet_amount']
+		return JsonResponse({'status': 'success', 'results': txns, 'wallet_amount': wallet_amount}, status=HTTPStatus.OK)
 	else:
 		return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
+@csrf_exempt
 def addmoney(request):
 	if request.user.is_authenticated:
-		form = AddMoneyForm(request.POST)
+		info = json.loads(request.body.decode('utf8').replace("'", '"'))
+		form = AddMoneyForm({'amount': info['amount'], 'payment_gateway': info['payment_method']})
 		if form.is_valid():
 			params = {
+				'id': np.random.randint(1000, 100000),
 				'user_id': request.user.uid,
-				'amount': form.cleaned_data['amount'],
-				'payment_method': form.cleaned_data['payment_method'],
+				'amount': info['amount'],
+				'payment_id': info['payment_method'],
 				'timestamp': datetime.now()
 			}
 			Addmoney.objects.create(**params)
-			Users.objects.filter(uid=request.user.uid).update(wallet_amount=Users.objects.get(uid=request.user.uid).wallet_amount + form.cleaned_data['amount'])
+			Users.objects.filter(uid=request.user.uid).update(wallet_amount=Users.objects.filter(uid=request.user.uid).values('wallet_amount')[0]['wallet_amount'] + int(info['amount']))
 			return JsonResponse({'status': 'success', 'results': 'Money added successfully.'}, status=HTTPStatus.OK)
 		else :
 			return JsonResponse({'status': 'failure', 'results': 'Money not added.'}, status=HTTPStatus.BAD_REQUEST)
@@ -115,6 +121,7 @@ def wishlist(request):
 			return JsonResponse({'status': 'success', 'results': 'Product added to wishlist.'}, status=HTTPStatus.OK)
 	else:
 		return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
+
 @csrf_exempt
 def order(request):
 	if request.user.is_authenticated:
@@ -123,10 +130,10 @@ def order(request):
 		if total_amount is None : total_amount = 0
 		new_balance = Users.objects.filter(uid=request.user.uid).values()[0]['wallet_amount'] - total_amount
 		info = json.loads(request.body.decode('utf-8').replace("'", '"'))
-		payment_id = int(info)
+		payment_id = int(info['payment_id'])
 		if payment_id == 4 :
 			if new_balance < 0 :
-				return JsonResponse({'status': 'failure', 'results': 'Insufficient balance in wallet, please choose a different payment method or add money to your wallet.'}, status=HTTPStatus.BAD_REQUEST)
+				return JsonResponse({'status': 'failure', 'results': 'Insufficient balance in wallet, please choose a different payment method or add money to your wallet.'}, status=411)
 			Users.objects.filter(uid=request.user.uid).update(wallet_amount=new_balance)
 		params = {
 			'order_id': np.random.randint(20000, 100000),
@@ -151,7 +158,7 @@ def order(request):
 			print(params)
 			new_quantity = Product.objects.filter(product_id=product['product_id']).values()[0]['quantity_available'] - product['quantity']
 			if new_quantity < 0 :
-				return JsonResponse({'status': 'failure', 'results': 'Insufficient quantity in stock.'}, status=HTTPStatus.BAD_REQUEST)
+				return JsonResponse({'status': 'failure', 'results': 'Insufficient quantity in stock.'}, status=415)
 			Transaction.objects.create(**params)
 			Incart.objects.filter(buyer_id=request.user.uid).delete()
 			Users.objects.filter(uid=seller_id).update(wallet_amount=Users.objects.filter(uid=seller_id).values('wallet_amount')[0]['wallet_amount'] + product['quantity'] * Product.objects.filter(product_id=product['product_id']).values()[0]['discount'])

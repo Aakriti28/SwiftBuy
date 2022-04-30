@@ -1,0 +1,32 @@
+<div style="background-color: lightblue; padding-top: 30pt;padding-bottom: 30pt;">
+    <form action="" class="form" #myForm="ngForm">
+        
+             <p style="margin-left: 30%;">
+                <mat-form-field appearance="fill">
+                  <mat-label>Amount to add to wallet</mat-label>
+                  <input required matInput [(ngModel)]="amount" name="amount" required>
+                </mat-form-field>
+              </p>
+              <p style="margin-left: 30%;">
+                <mat-form-field appearance="fill">
+                    <mat-label color="accent">Payment Gateway</mat-label>
+                <!-- Use ngFor here after ftching all categories from backend -->
+                <mat-select aria-required="true" placeholder="UPI" [(ngModel)]="payment_method" name="pay_method">
+                  <mat-option value="1">UPI</mat-option>
+                  <mat-option value="2">Credit Card</mat-option>
+                  <mat-option value="3">Debit Card</mat-option>
+                </mat-select>
+                <!-- <mat-option *ngFor="let option of options" [value]="option.value">
+                    {{ option.label | translate }}
+                </mat-option> -->
+                </mat-form-field>
+              </p>
+            
+    
+          <p style="margin-left: 30%;">
+            <button type="button" (click)="addMoney()" mat-raised-button color="accent" [disabled]="!myForm.form.valid" >Add to Wallet</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </p>
+    </form>
+    
+    
+</div>

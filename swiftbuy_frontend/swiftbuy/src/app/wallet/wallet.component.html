@@ -1,7 +1,28 @@
-<p>wallet works!</p>
-total wallet amt <br>
+Total Wallet Amount: {{catalog_list.wallet_amount}} <br><br>
+Previous Add Money Trasactions 
+<ul>
+    <li *ngFor="let w of catalog_list.results">
+        <!-- {{notifs.notiftext}} ({{notifs.notiftimestamp}} -->
+        <!-- - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a> -->
+<div style="display: flex;">
+  <mat-card class="example-card custom">
+    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+    <mat-card-title-group>
+      <!-- <mat-card-title> <a [routerLink]="['/notifications', 2]">Notification</a> </mat-card-title> -->
+      <mat-card-subtitle>
+          {{w[0]}}
+        </mat-card-subtitle>
+      <mat-card-subtitle>Amount: {{w[1]}}</mat-card-subtitle>
+      <mat-card-subtitle>Timestamp {{w[2]}}</mat-card-subtitle>
+      <!-- <mat-card-subtitle>Rs. 50</mat-card-subtitle> -->
+      <!-- <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" > -->
+    </mat-card-title-group>
+  </mat-card>
+</div>
+</li>
+</ul>
 
-prev wallet txns 
-
-btns: <br>
-add money 
+<p style="margin-left: 30%;">
+    <!-- <button type="button" (click)="addMoney()" mat-raised-button color="accent" [disabled]="!myForm.form.valid" >Update</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+    <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['/addmoney']">Add Money to Wallet</a>
+</p>

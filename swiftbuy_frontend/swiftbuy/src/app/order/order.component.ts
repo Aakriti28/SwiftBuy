@@ -22,6 +22,9 @@ export class OrderComponent implements OnInit {
         },
         error => {
           console.log("error in payment = ", error);
+          if (error.status == 415) alert('Insufficient quantity available in stock');
+          else if (error.status == 411) alert("You don't have sufficient amount in wallet. Consider adding money to wallet");
+          // else alert("You don't have sufficient amount in wallet. Consider adding money to wallet");
         }
       );
   }

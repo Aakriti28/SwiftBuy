@@ -308,12 +308,9 @@ class Users(AbstractBaseUser):
     shipping_address = models.TextField(blank=True, null=True)
     email = models.TextField(blank=True, null=True, unique=True)
     password = models.TextField(blank=True, null=True)
-    wallet_amount = models.IntegerField(blank=True, null=True)
+    wallet_amount = models.IntegerField(blank=True, null=True, default=0)
     referral_token = models.TextField(blank=True, null=True)
     role = models.TextField(blank=True, null=True)
-    # is_active = models.IntegerField(blank=True, null=True)
-    # is_admin = models.IntegerField(blank=True, null=True)
-    
 
     objects = UserManager()
 

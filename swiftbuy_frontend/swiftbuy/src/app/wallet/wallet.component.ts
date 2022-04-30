@@ -18,6 +18,20 @@ export class WalletComponent implements OnInit {
     this.service.getWalletHistory().subscribe(
       response => {
         this.catalog_list = response;
+        
+        console.log(this.catalog_list)
+      },
+      error => {
+        console.log("error in getcatalogFromAPI : ",error)
+      }
+    )
+  }
+
+  addMoney(){
+    this.service.getWalletHistory().subscribe(
+      response => {
+        this.catalog_list = response;
+        
         console.log(this.catalog_list)
       },
       error => {

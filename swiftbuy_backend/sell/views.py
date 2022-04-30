@@ -106,9 +106,12 @@ def delete(request, productid):
 def history(request):
     if request.user.is_authenticated:
         userid = request.user.uid
-        transactions = Transaction.objects.filter(seller_id=userid)
-        products = Product.objects.filter(product_id__in=list(transactions.values('product_id')))
-        return JsonResponse({'transactions': list(transactions.values()), 'products': list(products.values()), 'status': 'success'}, status=HTTPStatus.OK)
+        quantities = list(Transaction.objects.filter(seller_id=userid).values_list('product_id', 'quantity').order_by('product_id'))
+        product_ids = [x[0] for x in quantities]
+        products = list(Product.objects.filter(product_id__in=product_ids).values().order_by('product_id'))
+        for i in range(len(quantities)) :
+            products[i]['quantity'] = quantities[i][1]
+        return JsonResponse({'status': 'success', 'results': products}, status=HTTPStatus.OK)
     else:
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 

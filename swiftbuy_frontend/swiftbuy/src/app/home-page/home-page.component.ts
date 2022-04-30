@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CatalogService } from '../catalog.service';
 
 @Component({
   selector: 'app-home-page',
@@ -6,12 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
-
-  constructor() { console.log("kya")}
+  ads : any = [];
+  constructor(private service: CatalogService) {}
 
   ngOnInit(): void {
+    this.getAdsFromAPI()
   }
 
+  getAdsFromAPI(){
+    this.service.getAds()
+      .subscribe(data => {
+        this.ads = data;
+        console.log(this.ads);
+      });
+  }
   // getAdvertismentsFromAPI(){
   //   if ( this.pid<1 ) {
   //     this.pid=1;

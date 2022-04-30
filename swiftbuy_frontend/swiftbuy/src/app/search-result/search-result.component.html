@@ -1,0 +1,15 @@
+
+
+<ul>
+    <li *ngFor="let s of service.search_data">
+        <!-- {{notifs.notiftext}} ({{notifs.notiftimestamp}} -->
+        <!-- - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a> -->
+<div style="display: flex;">
+  <!-- <mat-card class="example-card custom"> -->
+      <mat-card-title> <a [routerLink]="['/product', s.product_id]">{{s.name}}</a> </mat-card-title>
+  
+  <!-- </mat-card> -->
+</div>
+</li>
+</ul>
+

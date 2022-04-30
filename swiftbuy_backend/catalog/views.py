@@ -9,14 +9,10 @@ import json
 # Create your views here.
 # @csrf_exempt
 def categories(request):
-    # print(request.user.is_authenticated)
-    print("ATLEAST here")
     if request.user.is_authenticated:
-        print("NOT SO SAD")
         categories = Category.objects.all()
         return JsonResponse({'status': 'success', 'results': list(categories.values())}, status=HTTPStatus.OK)
     else :
-        print("SAD")
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
 def products(request, categoryid):
@@ -41,10 +37,11 @@ def viewproduct(request, productid):
     else :
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
+@csrf_exempt
 def search(request):
     if request.user.is_authenticated:
         query = json.loads(request.body.decode('utf-8').replace("'", '"'))['query']
         products = Product.objects.filter(name__icontains=query).filter(product_desc__icontains=query)
-        return JsonResponse({'status': 'success', 'results': list(products.values())[:10]}, status=HTTPStatus.OK)
+        return JsonResponse({'status': 'success', 'results': list(products.values())[:100]}, status=HTTPStatus.OK)
     else :
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)

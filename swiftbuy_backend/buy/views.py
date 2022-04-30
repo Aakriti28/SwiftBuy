@@ -12,8 +12,6 @@ def history(request):
         quantities = list(Transaction.objects.filter(buyer_id=userid).values_list('product_id', 'quantity').order_by('product_id'))
         product_ids = [x[0] for x in quantities]
         products = list(Product.objects.filter(product_id__in=product_ids).values().order_by('product_id'))
-        print(products)
-        print(quantities)
         for i in range(len(quantities)) :
             products[i]['quantity'] = quantities[i][1]
         return JsonResponse({'status': 'success', 'results': products}, status=HTTPStatus.OK)

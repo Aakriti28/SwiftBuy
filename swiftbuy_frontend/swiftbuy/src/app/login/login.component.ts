@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   };
+  isValid = true;
   constructor(private _auth: AuthService, private router: Router) { }
 
   ngOnInit(): void {
@@ -31,7 +32,9 @@ export class LoginComponent implements OnInit {
       // , 
       err => {
         console.log(err);
+        this.isValid = false;
         this._auth._isLoggedIn = false;
+        alert("Invalid Credentials");
       },
 
     )
