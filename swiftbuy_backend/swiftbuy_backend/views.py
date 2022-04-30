@@ -18,8 +18,10 @@ import numpy as np
 
 def home(request):
 	if request.user.is_authenticated:
-		advertised_products = Product.objects.filter(is_advertised=True)
-		return JsonResponse({'status': 'success', 'results': list(advertised_products.values())}, status=HTTPStatus.OK)
+		advertised_products = Product.objects.filter(advertised=1).values()
+		for p in advertised_products :
+			p['images'] = p['images'][1:-1].replace('\\', '').split(',')[0].strip('"').strip('\\').strip('"')
+		return JsonResponse({'status': 'success', 'results': list(advertised_products)[:100]}, status=HTTPStatus.OK)
 	else:
 		return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
@@ -119,6 +121,7 @@ def wishlist(request):
 			return JsonResponse({'status': 'success', 'results': 'Product added to wishlist.'}, status=HTTPStatus.OK)
 	else:
 		return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
+
 @csrf_exempt
 def order(request):
 	if request.user.is_authenticated:
@@ -127,10 +130,10 @@ def order(request):
 		if total_amount is None : total_amount = 0
 		new_balance = Users.objects.filter(uid=request.user.uid).values()[0]['wallet_amount'] - total_amount
 		info = json.loads(request.body.decode('utf-8').replace("'", '"'))
-		payment_id = int(info)
+		payment_id = int(info['payment_id'])
 		if payment_id == 4 :
 			if new_balance < 0 :
-				return JsonResponse({'status': 'failure', 'results': 'Insufficient balance in wallet, please choose a different payment method or add money to your wallet.'}, status=HTTPStatus.BAD_REQUEST)
+				return JsonResponse({'status': 'failure', 'results': 'Insufficient balance in wallet, please choose a different payment method or add money to your wallet.'}, status=411)
 			Users.objects.filter(uid=request.user.uid).update(wallet_amount=new_balance)
 		params = {
 			'order_id': np.random.randint(20000, 100000),
@@ -155,7 +158,7 @@ def order(request):
 			print(params)
 			new_quantity = Product.objects.filter(product_id=product['product_id']).values()[0]['quantity_available'] - product['quantity']
 			if new_quantity < 0 :
-				return JsonResponse({'status': 'failure', 'results': 'Insufficient quantity in stock.'}, status=HTTPStatus.BAD_REQUEST)
+				return JsonResponse({'status': 'failure', 'results': 'Insufficient quantity in stock.'}, status=415)
 			Transaction.objects.create(**params)
 			Incart.objects.filter(buyer_id=request.user.uid).delete()
 			Users.objects.filter(uid=seller_id).update(wallet_amount=Users.objects.filter(uid=seller_id).values('wallet_amount')[0]['wallet_amount'] + product['quantity'] * Product.objects.filter(product_id=product['product_id']).values()[0]['discount'])

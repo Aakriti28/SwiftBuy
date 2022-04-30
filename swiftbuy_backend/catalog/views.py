@@ -9,14 +9,10 @@ import json
 # Create your views here.
 # @csrf_exempt
 def categories(request):
-    # print(request.user.is_authenticated)
-    print("ATLEAST here")
     if request.user.is_authenticated:
-        print("NOT SO SAD")
         categories = Category.objects.all()
         return JsonResponse({'status': 'success', 'results': list(categories.values())}, status=HTTPStatus.OK)
     else :
-        print("SAD")
         return JsonResponse({'status': 'auth_failure', 'results': 'User not authenticated'}, status=HTTPStatus.UNAUTHORIZED)
 
 def products(request, categoryid):
