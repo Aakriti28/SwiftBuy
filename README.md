@@ -1,7 +1,7 @@
 ## Project Details : SwiftBuy
-#### We have created a sample e-commerce application for buying and selling of products.
+#### We have created a sample e-commerce application for buying and selling of products using Angular, Django, PostgreSQL and Apache Spark
 
-#### Submitted on : August 18, 202
+#### Here is the [link to Project Report](./CS387_Project_Report.pdf)
 
 ### Team members
 1. Aadish Jain - 190050001
